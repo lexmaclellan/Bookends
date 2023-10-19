@@ -1,3 +1,4 @@
+const { Types } = require('mongoose')
 const { Book } = require('../models')
 
 module.exports = {
@@ -5,9 +6,28 @@ module.exports = {
     async getAllBooks(req, res) {
         try {
             const books = await Book.find()
-            res.json(books)
+
+            res.status(200).json({
+                count: books.length,
+                data: books
+            })
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json(err.message)
+        }
+    },
+
+    async getOneBook(req, res) {
+        try {
+            const newBook = new Types.ObjectId(req.params.bookID)
+            const book = await Book.findById(newBook)
+           
+            if (!book) {
+                return res.status(404).json({ message: 'No book found with that ID.'})
+            }
+
+           return res.status(200).json(book)
+        } catch (err) {
+            res.status(500).json(err.message)
         }
     },
 
@@ -18,7 +38,7 @@ module.exports = {
                 !req.body.author || 
                 !req.body.publishedYear
             ) {
-                return res.status(400).json('Send all required fields: title, author, publishedYear')
+                return res.status(400).json({ message: 'Send all required fields: title, author, publishedYear' })
             }
             
             const newBook = {
@@ -28,7 +48,7 @@ module.exports = {
             }
             console.log(newBook)
             const book = await Book.create(newBook)
-            return res.json(book)
+            return res.status(200).json(book)
         } catch (err) {
             res.status(500).json(err.message)
         }
