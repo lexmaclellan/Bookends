@@ -24,53 +24,55 @@ function Home() {
                 setLoading(false)
             })
     }, [])
-  return (
-    <div className='p-4'>
-        <div className='flex justify-between items-center'>
-            <h1 className='text-3xl my-8'>Books List</h1>
-            <Link to='/books/create'>
-                <MdOutlineAddBox className='text-sky-800 text-4xl' />
-            </Link>
-        </div>
-        {loading ? (
-            <Spinner />
-        ) : (
-            <div className='w-full border-separate border-spacing-2'>
-                <div className='container-fluid'>
+    return (
+        <div className='p-4'>
+            <div className='flex justify-between items-center'>
+                <h1 className='text-3xl my-8'>Books List</h1>
+                <Link to='/books/create'>
+                    <MdOutlineAddBox className='text-sky-800 text-4xl' />
+                </Link>
+            </div>
+            {loading ? (
+                <Spinner />
+            ) : (
+                <>
                     {books.map((book, index) => (
-                        <div key={book._id} className='row h-8'>
-                            <div className='col border border-slate-700 rounded-md text-center'>
-                                {index + 1}
-                            </div>
-                            <div className='col border border-slate-700 rounded-md text-center'>
-                                {book.title}
-                            </div>
-                            <div className='col border border-slate-700 rounded-md text-center max-md:hidden'>
-                                {book.author}
-                            </div>
-                            <div className='col border border-slate-700 rounded-md text-center max-md:hidden'>
-                                {book.publishedYear}
-                            </div>
-                            <div className='col border border-slate-700 rounded-md text-center'>
-                                <div className='flex justify-center gap-x-4'>
-                                    <Link to={`/books/details/${book._id}`}>
-                                        <BsInfoCircle className='text-2xl text-green-800' />
-                                    </Link>
-                                    <Link to={`/books/edit/${book._id}`}>
-                                        <AiOutlineEdit className='text-2xl text-yellow-600' />
-                                    </Link>
-                                    <Link to={`/books/delete/${book._id}`}>
-                                        <MdOutlineDelete className='text-2xl text-red-600' />
-                                    </Link>
+                        <div className='w-full border-separate border-spacing-2'>
+                            <div className='container inline-block'>
+                                <div key={book._id} className='row h-8'>
+                                    <div className='col border border-slate-700 rounded-md text-center'>
+                                        {index + 1}
+                                    </div>
+                                    <div className='col border border-slate-700 rounded-md text-center'>
+                                        {book.title}
+                                    </div>
+                                    <div className='col border border-slate-700 rounded-md text-center max-md:hidden'>
+                                        {book.author}
+                                    </div>
+                                    <div className='col border border-slate-700 rounded-md text-center max-md:hidden'>
+                                        {book.publishedYear}
+                                    </div>
+                                    <div className='col border border-slate-700 rounded-md text-center'>
+                                        <div className='flex justify-center gap-x-4'>
+                                            <Link to={`/books/details/${book._id}`}>
+                                                <BsInfoCircle className='text-2xl text-green-800' />
+                                            </Link>
+                                            <Link to={`/books/edit/${book._id}`}>
+                                                <AiOutlineEdit className='text-2xl text-yellow-600' />
+                                            </Link>
+                                            <Link to={`/books/delete/${book._id}`}>
+                                                <MdOutlineDelete className='text-2xl text-red-600' />
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     ))}
-                </div>
-            </div>
-        )}
-    </div>
-  )
+                </>
+            )}
+        </div>
+    )
 }
 
 export default Home
