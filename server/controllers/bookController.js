@@ -46,9 +46,52 @@ module.exports = {
                 author: req.body.author,
                 publishedYear: req.body.publishedYear
             }
-            console.log(newBook)
+            
             const book = await Book.create(newBook)
+
             return res.status(200).json(book)
+        } catch (err) {
+            res.status(500).json(err.message)
+        }
+    },
+
+    async updateBook(req, res) {
+        try {
+            if (
+                !req.body.title || 
+                !req.body.author || 
+                !req.body.publishedYear
+            ) {
+                return res.status(400).json({ message: 'Send all required fields: title, author, publishedYear' })
+            }
+
+            const updatedBook = new Types.ObjectId(req.params.bookID)
+            const book = await Book.findByIdAndUpdate(
+                updatedBook,
+                { $set: req.body },
+                { runValidators: true, new: true }
+            )
+
+            if (!book) {
+                return res.status(404).json({ message: 'No book found with that ID.'})
+            }
+
+            return res.status(200).json(book)
+        } catch (err) {
+            res.status(500).json(err.message)
+        }
+    },
+
+    async deleteBook(req, res) {
+        try {
+            const deletedBook = new Types.ObjectId(req.params.bookID)
+            const book = await Book.findByIdAndDelete(deletedBook)
+
+            if (!book) {
+                return res.status(404).json({ message: 'No book found with that ID.'})
+            }
+
+            return res.status(200).json({ message: 'Book deleted.' })
         } catch (err) {
             res.status(500).json(err.message)
         }
