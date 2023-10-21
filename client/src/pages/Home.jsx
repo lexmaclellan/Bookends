@@ -15,7 +15,6 @@ function Home() {
         axios
             .get('http://localhost:5000/api/books')
             .then((res) => {
-                console.log(res)
                 setBooks(res.data.data)
                 setLoading(false)
             })
