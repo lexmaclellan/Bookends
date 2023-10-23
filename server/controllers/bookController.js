@@ -3,6 +3,9 @@ const { Book } = require('../models')
 
 module.exports = {
 
+    // @desc    Get all books
+    // route    GET /api/books
+    // @access  Public
     async getAllBooks(req, res) {
         try {
             const books = await Book.find()
@@ -16,6 +19,9 @@ module.exports = {
         }
     },
 
+    // @desc    Get one book
+    // route    GET /api/books/:bookID
+    // @access  Public
     async getOneBook(req, res) {
         try {
             const newBook = new Types.ObjectId(req.params.bookID)
@@ -31,6 +37,9 @@ module.exports = {
         }
     },
 
+    // @desc    Add new book
+    // route    POST /api/books
+    // @access  Public
     async createBook(req, res) {
         try {
             if (
@@ -55,6 +64,9 @@ module.exports = {
         }
     },
 
+    // @desc    Update a book
+    // route    PUT /api/books/:bookID
+    // @access  Public
     async updateBook(req, res) {
         try {
             if (
@@ -82,6 +94,9 @@ module.exports = {
         }
     },
 
+    // @desc    Delete a book
+    // route    DELETE /api/books/:userID
+    // @access  Public
     async deleteBook(req, res) {
         try {
             const deletedBook = new Types.ObjectId(req.params.bookID)
