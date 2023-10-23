@@ -2,6 +2,7 @@ require('dotenv').config({ path: '../.env'} )
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 const db = require('./config/connection')
 const routes = require('./routes')
 
@@ -13,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors())
 app.use(routes)
+app.use(notFound)
+app.use(errorHandler)
 
 app.get('/', (req, res) => {
     return res.status(234).send('Welcome to the Bookends API')
