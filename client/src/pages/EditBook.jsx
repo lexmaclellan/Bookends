@@ -14,7 +14,8 @@ function EditBook() {
 
   useEffect(() => {
     setLoading(true)
-    axios.get(`http://localhost:5000/api/books/${bookID}`)
+    axios
+      .get(`http://localhost:5000/api/books/${bookID}`)
       .then((res) => {
         setTitle(res.data.title)
         setAuthor(res.data.author)
