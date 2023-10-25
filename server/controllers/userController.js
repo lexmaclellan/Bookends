@@ -70,6 +70,7 @@ const getUsers = asyncHandler(async (req, res) => {
     const usersList = []
     for (let i = 0; i < users.length; i++) {
         usersList.push({
+            _id: users[i]._id,
             name: users[i].name,
             email: users[i].email,
             createdAt: users[i].createdAt,
