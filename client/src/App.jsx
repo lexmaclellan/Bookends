@@ -2,13 +2,13 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import BooksList from './pages/BooksList'
 import CreateBook from './pages/CreateBooks'
-import ShowBook from './pages/ShowBook'
-import EditBook from './pages/EditBook'
 import DeleteBook from './pages/DeleteBook'
-import Signup from './pages/Signup'
+import EditBook from './pages/EditBook'
 import Login from './pages/Login'
-import Navbar from './components/Navbar'
+import ShowBook from './pages/ShowBook'
+import Signup from './pages/Signup'
 import Users from './pages/UsersList'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/' element={<BooksList />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/users/account-recovery' element={<></>} />
         <Route path='/books/create' element={<CreateBook />} />
         <Route path='/books/details/:bookID' element={<ShowBook />} />
         <Route path='/books/edit/:bookID' element={<EditBook />} />
