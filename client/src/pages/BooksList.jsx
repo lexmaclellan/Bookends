@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
-import BookCardGrid from '../components/home/BookCardGrid'
+import BookCardGrid from '../components/Books/BookCardGrid'
 
 function Home() {
     const [books, setBooks] = useState([])
@@ -14,30 +14,35 @@ function Home() {
         axios
             .get('http://localhost:5000/api/books')
             .then((res) => {
+                console.log(res.data.data)
                 setBooks(res.data.data)
                 setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setBooks.log(err)
                 setLoading(false)
             })
     }, [])
     return (
-        <div className='p-4'>
+        <article className='p-4'>
             <div className='flex justify-between items-center'>
                 <h1 className='text-3xl my-8'>Books List</h1>
                 <Link to='/books/create'>
-                    <MdOutlineAddBox className='text-sky-800 text-4xl' />
+                    <MdOutlineAddBox className='text-slate-200 text-4xl' />
                 </Link>
             </div>
             {loading ? (
                 <Spinner />
             ) : (
                 <>
-                    <BookCardGrid books={books} />
+                    {books?.length
+                        ? (
+                            <BookCardGrid books={books} />
+                        ) : <p>No books to display</p>
+                    }
                 </>
             )}
-        </div>
+        </article>
     )
 }
 
