@@ -14,7 +14,6 @@ function Users() {
         axios
             .get('http://localhost:5000/api/users')
             .then((res) => {
-                console.log("Pay attention to this", res.data.data.usersList)
                 setUsers(res.data.data.usersList)
                 setLoading(false)
             })
