@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import BackButton from '../components/BackButton'
@@ -25,7 +25,7 @@ function ShowBook() {
   }, [])
 
   return (
-    <div className='p-4'>
+    <article className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Book Details</h1>
       {loading ? (
@@ -50,7 +50,7 @@ function ShowBook() {
           </div>
         </div>
       )}
-    </div>
+    </article>
   )
 }
 

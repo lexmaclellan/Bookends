@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import axios from 'axios'
@@ -52,7 +52,7 @@ function EditBook() {
   }
 
   return (
-    <div className='p-4'>
+    <article className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Edit Book</h1>
       {loading ? <Spinner /> : ''}
@@ -88,8 +88,7 @@ function EditBook() {
           Save
         </button>
       </div>
-
-    </div>
+    </article>
   )
 }
 

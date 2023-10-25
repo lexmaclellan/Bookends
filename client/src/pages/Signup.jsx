@@ -11,7 +11,7 @@ function Signup() {
     }
 
     return (
-        <div className='p-4'>
+        <article className='p-4'>
             <form onSubmit={handleSubmit}>
                 <h3>Sign Up</h3>
 
@@ -31,7 +31,7 @@ function Signup() {
 
                 <button>Sign Up</button>
             </form>
-        </div>
+        </article>
     )
 }
 

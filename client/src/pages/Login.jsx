@@ -9,7 +9,7 @@ function Login() {
     }
 
     return (
-        <div className='p-4'>
+        <article className='p-4'>
             <form onSubmit={handleSubmit}>
                 <h3>Log In</h3>
 
@@ -29,7 +29,7 @@ function Login() {
 
                 <button>Log In</button>
             </form>
-        </div>
+        </article>
     )
 }
 
