@@ -8,7 +8,6 @@ module.exports = {
     // @access  Public
     async getAllBooks(req, res) {
         try {
-            console.log(Book)
             const books = await Book.find()
 
             res.status(200).json({
