@@ -93,17 +93,24 @@ const getOneUser = asyncHandler(async (req, res) => {
 })
 
 // @desc    Update user
-// route    PUT /api/users
+// route    PUT /api/users/:userID
 // @access  Private
 const updateUser = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Update User' })
 })
 
 // @desc    Delete user
-// route    DELETE /api/users
+// route    DELETE /api/users/:userID
 // @access  Private
 const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Delete User' })
+})
+
+// @desc    Add role to user
+// route    PUT /api/users/:userID
+// @access  Private
+const addRole = asyncHandler(async (req, res) => {
+
 })
 
 module.exports = {
