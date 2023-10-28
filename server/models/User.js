@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
+const roleSchema = require('./Role')
 
 const userSchema = new Schema(
     {
@@ -17,8 +18,12 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
+        roles: [roleSchema]
     },
     {
+        toJSON: {
+            getters: true,
+        },
         timestamps: true,
     }
 )
@@ -43,7 +48,8 @@ userSchema.statics.register = async function(name, email, password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const user = await this.create({ name, email, password: hash })
+    const newUser = { name, email, password: hash, roles: { name: 'User', code: 5150 } }
+    const user = await this.create(newUser)
     
     return user
 }
