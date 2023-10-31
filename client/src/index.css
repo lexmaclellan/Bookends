@@ -6,3 +6,20 @@ body {
     background-color: rgb(30 41 59);
     color: white;
 }
+
+.hide {
+    display: none;
+}
+
+.instructions {
+    position: relative;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.auth-submit:disabled {
+    background-color: #a1a1aa;
+}
