@@ -68,20 +68,21 @@ function Login() {
                 <form onSubmit={handleSubmit}>
                     <hr className='mt-6' />
                     <section className='mt-3'>
-                        <label for='email' class='block text-base mb-1'>Email Address:</label>
+                        <label for='email' className='block text-base mb-1'>Email Address:</label>
                         <input
                             type='email'
                             id='email'
                             ref={emailRef}
-                            className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-md'
+                            className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
                             placeholder='your.name@example.com'
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             required
                         />
                     </section>
+
                     <section className='mt-3'>
-                        <label for='password' class='block text-base mb-1'>Password:</label>
+                        <label for='password' className='block text-base mb-1'>Password:</label>
                         <input
                             type='password'
                             id='password'
@@ -92,6 +93,7 @@ function Login() {
                             required
                         />
                     </section>
+
                     <section className='mt-1 flex justify-between items-center'>
                         <span>
                             <input type='checkbox' id='checkbox' className='mr-1' />
@@ -101,6 +103,7 @@ function Login() {
                             <Link to='/users/account-recovery' className='text-sm'>Forgot Password?</Link>
                         </span>
                     </section>
+                    
                     <button className='mt-6 py-1 w-full bg-gray-800 text-slate-300 border-2 border-slate-500 font-semibold rounded-md'>
                         Log In
                     </button>
