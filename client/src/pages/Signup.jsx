@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BsInfoCircle } from 'react-icons/bs'
 import { GiCheckMark } from 'react-icons/gi'
+import axios from 'axios'
 
 const EMAIL_REGEX =  	
 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,100}$/
+const REGISTER_URL = '/signup'
 
 function Signup() {
     const emailRef = useRef()
@@ -61,6 +63,28 @@ function Signup() {
         if (!v1 || !v2) {
             setErrMsg('Invalid entry')
             return
+        }
+
+        try {
+            const res = await axios.post(
+                REGISTER_URL,
+                JSON.stringify({ email: email, password: pwd}),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            )
+            setSuccess(true)
+        } catch (err) {
+            if (!err?.response) {
+                setErrMsg('No response from server.')
+            } else if (err.response?.status === 409)
+            {
+                setErrMsg('Email address already in use.')
+            } else {
+                setErrMsg('Registration failed.')
+            }
+            errRef.current.focus()
         }
 
         setSuccess(true)
