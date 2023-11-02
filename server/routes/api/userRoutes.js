@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const verifyJWT = require('../../middleware/verifyJWT')
 
 const {
     authUser,
@@ -13,8 +14,8 @@ const {
 } = require ('../../controllers/userController')
 
 router.route('/').get(getUsers).post(registerUser)
-router.route('/:userID').get(getOneUser).put(updateUser).delete(deleteUser)
-router.route('/:userID/roles').put(addRole).delete(removeRole)
+router.route('/:userID').get(getOneUser).put(verifyJWT, updateUser).delete(verifyJWT, deleteUser)
+router.route('/:userID/roles').put(verifyJWT, addRole).delete(verifyJWT, removeRole)
 router.route('/auth').post(authUser)
 router.route('/logout').post(logoutUser)
 
