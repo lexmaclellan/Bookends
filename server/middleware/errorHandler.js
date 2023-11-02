@@ -1,3 +1,5 @@
+const { logEvents } = require('./logEvents')
+
 const notFound = (req, res, next) => {
     const err = new Error(`Not Found - ${req.originalUrl}`)
     res.status(404)
@@ -5,6 +7,8 @@ const notFound = (req, res, next) => {
 }
 
 const errorHandler = (err, req, res, next) => {
+    logEvents(`${err.name}: ${err.message}`, 'errLog.txt')
+    
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode
     let message = err.message
     
