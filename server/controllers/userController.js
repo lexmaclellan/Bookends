@@ -2,8 +2,25 @@ const { User } = require('../models')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 
-function createToken(_id) {
-    const token = jwt.sign({_id}, process.env.SECRET, { expiresIn: '30d' })
+function createAccessToken(_id) {
+    const token = jwt.sign(
+        {_id},
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '1m' }
+    )
+
+    if(!token) {
+        throw new Error('Failed to create jsonwebtoken.')
+    }
+    return token
+}
+
+function createRefreshToken(_id) {
+    const token = jwt.sign(
+        {_id},
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '3d' }
+    )
 
     if(!token) {
         throw new Error('Failed to create jsonwebtoken.')
@@ -19,13 +36,16 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.login(email, password)
 
     if (user) {
-        const token = createToken(user._id)
+        const accessToken = createAccessToken(user._id)
+        const refreshToken = createRefreshToken(user._id)
 
         res.status(200).json({
             _id: user._id,
             name: user.name,
             email: user.email,
-            token: token
+            roles: user.roles,
+            accessToken: accessToken,
+            refreshToken: refreshToken
         })
     } else {
         res.status(400)
@@ -37,17 +57,19 @@ const authUser = asyncHandler(async (req, res) => {
 // route    POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body
-    const user = await User.register(name, email, password)
+    const { email, password, roles } = req.body
+    const user = await User.register(email, password, roles)
 
     if (user) {
-        const token = createToken(user._id)
+        const accessToken = createAccessToken(user._id)
+        const refreshToken = createRefreshToken(user._id)
 
         res.status(201).json({
             _id: user._id,
-            name: user.name,
             email: user.email,
-            token: token
+            roles: user.roles,
+            accessToken: accessToken,
+            refreshToken: refreshToken
         })
     } else {
         res.status(400)
@@ -73,6 +95,7 @@ const getUsers = asyncHandler(async (req, res) => {
             _id: users[i]._id,
             name: users[i].name,
             email: users[i].email,
+            roles: users[i].roles,
             createdAt: users[i].createdAt,
             updatedAt: users[i].updatedAt
         })
@@ -89,7 +112,23 @@ const getUsers = asyncHandler(async (req, res) => {
 // route    GET /api/users/:userID
 // @access  Private
 const getOneUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Get One User' })
+    const user = await User.findById(req.params.userID)
+
+    if (user) {
+        const userList = []
+        userList.push({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.roles,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        })
+        res.status(200).json(userList)
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
 })
 
 // @desc    Update user
@@ -107,9 +146,27 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 // @desc    Add role to user
-// route    PUT /api/users/:userID
+// route    PUT /api/users/:userID/roles
 // @access  Private
 const addRole = asyncHandler(async (req, res) => {
+    const user = await User.findByIdAndUpdate(
+        req.params.userID,
+        { $addToSet: { roles: req.body } },
+        { runValidators: true, new: true }
+    )
+
+    if (user) {
+        res.status(200).json({ message: 'Role added successfully.' })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
+})
+
+// @desc    Remove role from user
+// route    PUT /api/users/:userID/roles
+// @access  Private
+const removeRole = asyncHandler(async (req, res) => {
 
 })
 
@@ -120,5 +177,7 @@ module.exports = {
     getUsers,
     getOneUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    addRole,
+    removeRole
 }
