@@ -57,7 +57,7 @@ userSchema.statics.register = async function(email, password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const newUser = { email, password: hash, roles: { 'User': 3509 } }
+    const newUser = { email, password: hash }
     const user = await this.create(newUser)
     
     return user
@@ -73,7 +73,7 @@ userSchema.statics.login = async function(email, password) {
         throw new Error('Invalid email or password.')
     }
 
-    if (user.roles.includes({ 'Banned': 4444 })) {
+    if (user.roles.Banned === 4444) {
         throw new Error('User has been banned.')
     }
 
