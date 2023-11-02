@@ -17,7 +17,7 @@ const {
 router.route('/').get(getUsers).post(registerUser)
 router.route('/auth').post(authUser)
 router.route('/refresh').get(handleRefreshToken)
-router.route('/logout').post(logoutUser)
+router.route('/logout').get(logoutUser)
 router.route('/:userID').get(getOneUser).put(verifyJWT, updateUser).delete(verifyJWT, deleteUser)
 router.route('/:userID/roles').put(verifyJWT, addRole).delete(verifyJWT, removeRole)
 

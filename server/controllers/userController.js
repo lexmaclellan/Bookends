@@ -93,7 +93,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
     const refreshToken = cookies.jwt
 
     const user = await User.findOne({ refreshToken })
-    if (!user) return res.sendStatus(403).json({ message: 'Unable to find user' })
+    if (!user) return res.sendStatus(403).json({ message: 'No user found with that refresh token' })
     
     jwt.verify(
         refreshToken,
@@ -107,10 +107,25 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
 })
 
 // @desc    Logout user
-// route    POST /api/users/logout
+// route    GET /api/users/logout
 // @access  Public
 const logoutUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Logout User' })
+    const cookies = req.cookies
+    if (!cookies?.jwt) return res.sendStatus(204)
+    const refreshToken = cookies.jwt
+
+    const user = await User.findOne({ refreshToken })
+    if (!user) {
+        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+        return res.sendStatus(204)
+    }
+
+    user.refreshToken = ''
+    await user.save()
+    
+    res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+
+    res.status(204).json({ message: 'User logged out' })
 })
 
 // @desc    Get all users
