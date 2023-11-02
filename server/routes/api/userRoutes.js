@@ -5,6 +5,7 @@ const {
     authUser,
     registerUser,
     logoutUser,
+    handleRefreshToken,
     getUsers,
     getOneUser,
     updateUser,
@@ -14,9 +15,10 @@ const {
 } = require ('../../controllers/userController')
 
 router.route('/').get(getUsers).post(registerUser)
+router.route('/auth').post(authUser)
+router.route('/refresh').get(handleRefreshToken)
+router.route('/logout').post(logoutUser)
 router.route('/:userID').get(getOneUser).put(verifyJWT, updateUser).delete(verifyJWT, deleteUser)
 router.route('/:userID/roles').put(verifyJWT, addRole).delete(verifyJWT, removeRole)
-router.route('/auth').post(authUser)
-router.route('/logout').post(logoutUser)
 
 module.exports = router
