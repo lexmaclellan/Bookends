@@ -207,7 +207,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 // route    PUT /api/users/:userID/roles
 // @access  Private
 const addRole = asyncHandler(async (req, res) => {
-    const user = await User.findByIdAndUpdate(
+    /*const user = await User.findByIdAndUpdate(
         req.params.userID,
         { $addToSet: { roles: req.body } },
         { runValidators: true, new: true }
@@ -218,7 +218,7 @@ const addRole = asyncHandler(async (req, res) => {
     } else {
         res.status(404)
         throw new Error('No user found with that ID.')
-    }
+    }*/
 })
 
 // @desc    Remove role from user
