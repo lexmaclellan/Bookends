@@ -42,7 +42,7 @@ userSchema.statics.register = async function(email, password) {
         throw new Error('Password must be at least 8 characters.')
     }
 
-    const exists = await this.findOne({email})
+    const exists = await this.findOne({ email })
     if (exists) {
         throw new Error('A user with that email address is already registered.')
     }
@@ -61,7 +61,7 @@ userSchema.statics.login = async function(email, password) {
         throw new Error('Invalid email or password.')
     }
 
-    const user = await this.findOne({email})
+    const user = await this.findOne({ email })
     if (!user) {
         throw new Error('Invalid email or password.')
     }
