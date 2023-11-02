@@ -6,8 +6,7 @@ const roleSchema = require('./Role')
 const userSchema = new Schema(
     {
         name: {
-            type: String,
-            required: true
+            type: String
         },
         email: {
             type: String,
@@ -28,9 +27,9 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.statics.register = async function(name, email, password) {
-    if (!name || !email || !password) {
-        throw new Error('Send all required fields: name, email, password')
+userSchema.statics.register = async function(email, password) {
+    if (!email || !password) {
+        throw new Error('Send all required fields: email, password')
     }
 
     if (!validator.isEmail(email)) {
@@ -48,7 +47,7 @@ userSchema.statics.register = async function(name, email, password) {
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    const newUser = { name, email, password: hash, roles: { name: 'User', code: 5150 } }
+    const newUser = { email, password: hash, roles: { name: 'User', code: 3509 } }
     const user = await this.create(newUser)
     
     return user
@@ -62,6 +61,10 @@ userSchema.statics.login = async function(email, password) {
     const user = await this.findOne({email})
     if (!user) {
         throw new Error('Invalid email or password.')
+    }
+
+    if (user.roles.includes({ 'Banned': 4444 })) {
+        throw new Error('User has been banned.')
     }
 
     const match = await bcrypt.compare(password, user.password)
