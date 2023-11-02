@@ -6,7 +6,7 @@ function createAccessToken(_id) {
     const token = jwt.sign(
         {_id},
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1m' }
+        { expiresIn: '5m' }
     )
 
     if(!token) {
