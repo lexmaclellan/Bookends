@@ -1,4 +1,6 @@
 const router = require('express').Router()
+const ROLES = require('../../config/roles')
+const verifyRoles = require('../../middleware/verifyRoles')
 const verifyJWT = require('../../middleware/verifyJWT')
 
 const {
@@ -18,7 +20,7 @@ router.route('/').get(getUsers).post(registerUser)
 router.route('/auth').post(authUser)
 router.route('/refresh').get(handleRefreshToken)
 router.route('/logout').get(logoutUser)
-router.route('/:userID').get(getOneUser).put(verifyJWT, updateUser).delete(verifyJWT, deleteUser)
-router.route('/:userID/roles').put(verifyJWT, addRole).delete(verifyJWT, removeRole)
+router.route('/:userID').get(getOneUser).put(updateUser).delete(deleteUser)
+router.route('/:userID/roles').put(addRole).delete(removeRole)
 
 module.exports = router
