@@ -9,9 +9,14 @@ const cookieOptions = {
     maxAge: 24 * 60 * 60 * 1000 * 3
 }
 
-function createAccessToken(_id) {
+function createAccessToken(_id, roles) {
     const token = jwt.sign(
-        {_id},
+        {
+            'UserInfo': {
+                '_id': _id,
+                'roles': roles
+            }
+        },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: '5m' }
     )
@@ -43,7 +48,7 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.login(email, password)
 
     if (user) {
-        const accessToken = createAccessToken(user._id)
+        const accessToken = createAccessToken(user._id, user.roles)
         const refreshToken = createRefreshToken(user._id)
 
         user.refreshToken = refreshToken
@@ -71,7 +76,7 @@ const registerUser = asyncHandler(async (req, res) => {
     const user = await User.register(email, password, roles)
 
     if (user) {
-        const accessToken = createAccessToken(user._id)
+        const accessToken = createAccessToken(user._id, user.roles)
         const refreshToken = createRefreshToken(user._id)
 
         user.refreshToken = refreshToken
@@ -107,7 +112,7 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
             if (err || user._id.toString() !== decoded._id) return res.sendStatus(403).json({ message: 'Unable to verify JWT' })
-            const accessToken = createAccessToken(user._id)
+            const accessToken = createAccessToken(decoded._id, user.roles)
             res.json({ accessToken })
         }
     )
