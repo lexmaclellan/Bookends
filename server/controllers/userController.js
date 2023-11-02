@@ -39,13 +39,16 @@ const authUser = asyncHandler(async (req, res) => {
         const accessToken = createAccessToken(user._id)
         const refreshToken = createRefreshToken(user._id)
 
+        user.refreshToken = refreshToken
+        await user.save()
+
+        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
         res.status(200).json({
             _id: user._id,
             name: user.name,
             email: user.email,
             roles: user.roles,
-            accessToken: accessToken,
-            refreshToken: refreshToken
+            accessToken: accessToken
         })
     } else {
         res.status(400)
@@ -64,12 +67,16 @@ const registerUser = asyncHandler(async (req, res) => {
         const accessToken = createAccessToken(user._id)
         const refreshToken = createRefreshToken(user._id)
 
+        user.refreshToken = refreshToken
+        await user.save()
+
+        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
         res.status(201).json({
             _id: user._id,
+            name: user.name,
             email: user.email,
             roles: user.roles,
-            accessToken: accessToken,
-            refreshToken: refreshToken
+            accessToken: accessToken
         })
     } else {
         res.status(400)
@@ -96,6 +103,7 @@ const getUsers = asyncHandler(async (req, res) => {
             name: users[i].name,
             email: users[i].email,
             roles: users[i].roles,
+            refreshToken: users[i].refreshToken,
             createdAt: users[i].createdAt,
             updatedAt: users[i].updatedAt
         })
@@ -121,6 +129,7 @@ const getOneUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             roles: user.roles,
+            refreshToken: users[i].refreshToken,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         })

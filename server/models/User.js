@@ -17,7 +17,10 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
-        roles: [roleSchema]
+        roles: [roleSchema],
+        refreshToken: {
+            type: String
+        }
     },
     {
         toJSON: {
@@ -63,7 +66,7 @@ userSchema.statics.login = async function(email, password) {
         throw new Error('Invalid email or password.')
     }
 
-    if (user.roles.includes({ 'Banned': 4444 })) {
+    if (user.roles.includes({ name: 'Banned', code: 4444 })) {
         throw new Error('User has been banned.')
     }
 
