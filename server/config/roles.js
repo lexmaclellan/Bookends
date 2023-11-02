@@ -3,3 +3,5 @@ const ROLES = {
     'User': 3509,
     'Banned': 4444
 }
+
+module.exports = ROLES
