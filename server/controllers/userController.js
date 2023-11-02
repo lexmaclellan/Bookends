@@ -2,6 +2,13 @@ const { User } = require('../models')
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 
+const cookieOptions = {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000 * 3
+}
+
 function createAccessToken(_id) {
     const token = jwt.sign(
         {_id},
@@ -42,7 +49,7 @@ const authUser = asyncHandler(async (req, res) => {
         user.refreshToken = refreshToken
         await user.save()
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+        res.cookie('jwt', refreshToken, cookieOptions)
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -70,7 +77,7 @@ const registerUser = asyncHandler(async (req, res) => {
         user.refreshToken = refreshToken
         await user.save()
 
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+        res.cookie('jwt', refreshToken, cookieOptions)
         res.status(201).json({
             _id: user._id,
             name: user.name,
@@ -116,14 +123,14 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ refreshToken })
     if (!user) {
-        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+        res.clearCookie('jwt', cookieOptions)
         return res.sendStatus(204)
     }
 
     user.refreshToken = ''
     await user.save()
     
-    res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 * 3 })
+    res.clearCookie('jwt', cookieOptions)
 
     res.status(204).json({ message: 'User logged out' })
 })
