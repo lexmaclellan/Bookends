@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
-import BookCardGrid from '../components/home/BookCardGrid'
+import UserCardGrid from '../components/Users/UserCardGrid'
 
-function Home() {
-    const [books, setBooks] = useState([])
+function Users() {
+    const [users, setUsers] = useState()
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setLoading(true)
         axios
-            .get('http://localhost:5000/api/books')
+            .get('http://localhost:5000/api/users')
             .then((res) => {
-                setBooks(res.data.data)
+                setUsers(res.data.data.usersList)
                 setLoading(false)
             })
             .catch((err) => {
-                console.log(err)
+                setUsers.log(err)
                 setLoading(false)
             })
     }, [])
     return (
-        <div className='p-4'>
+        <article className='p-4'>
             <div className='flex justify-between items-center'>
-                <h1 className='text-3xl my-8'>Books List</h1>
-                <Link to='/books/create'>
+                <h1 className='text-3xl my-8'>Users List</h1>
+                <Link to='/users/create'>
                     <MdOutlineAddBox className='text-sky-800 text-4xl' />
                 </Link>
             </div>
@@ -34,11 +34,15 @@ function Home() {
                 <Spinner />
             ) : (
                 <>
-                    <BookCardGrid books={books} />
+                    {users?.length
+                        ? (
+                            <UserCardGrid users={users} />
+                        ) : <p>No users to display</p>
+                    }
                 </>
             )}
-        </div>
+        </article>
     )
 }
 
-export default Home
+export default Users

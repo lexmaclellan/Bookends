@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import axios from 'axios'
@@ -35,7 +35,7 @@ function CreateBooks() {
   }
 
   return (
-    <div className='p-4'>
+    <article className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4'>Create Book</h1>
       {loading ? <Spinner /> : ''}
@@ -71,8 +71,7 @@ function CreateBooks() {
           Save
         </button>
       </div>
-
-    </div>
+    </article>
   )
 }
 

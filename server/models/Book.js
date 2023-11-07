@@ -16,6 +16,7 @@ const bookSchema = new Schema(
         }
     },
     {
+        timestamps: true,
         toJSON: {
             getters: true,
         },
