@@ -100,13 +100,13 @@ function Signup() {
                 </article>
             ) : (
                 <article className='p-4 flex justify-center items-center h-screen'>
-                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
-                        {errMsg}
-                    </p>
                     <section className='w-96 shadow-lg p-7 bg-slate-700 rounded-md'>
                         <h3 className='text-2xl block text-center font-semibold'>Sign Up</h3>
                         <form onSubmit={handleSubmit}>
                             <hr className='mt-6' />
+                            <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
+                                {errMsg}
+                            </p>
                             <section className='mt-3'>
                                 <label htmlFor='email' className='text-base mb-1 flex'>
                                     <span>Email Address:</span>
