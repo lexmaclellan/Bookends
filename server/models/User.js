@@ -73,13 +73,15 @@ userSchema.statics.login = async function(email, password) {
         throw new Error('Invalid email or password.')
     }
 
-    if (user.roles.Banned === 4444) {
-        throw new Error('User has been banned.')
-    }
-
     const match = await bcrypt.compare(password, user.password)
     if (!match) {
         throw new Error('Invalid email or password.')
+    } else {
+        const roles = Object.values(user.roles).filter(Boolean)
+
+        if (roles.Banned === 4444) {
+            throw new Error('User has been banned.')
+        }
     }
 
     return user
