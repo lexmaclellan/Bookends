@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
-import axios from 'axios'
+import axios from '../api/axios'
 import Spinner from '../components/Spinner'
 import BookCardGrid from '../components/Books/BookCardGrid'
+const LOGIN_URL = '/api/books'
 
 function Home() {
     const [books, setBooks] = useState([])
@@ -12,7 +13,7 @@ function Home() {
     useEffect(() => {
         setLoading(true)
         axios
-            .get('http://localhost:5000/api/books')
+            .get(LOGIN_URL)
             .then((res) => {
                 setBooks(res.data.data)
                 setLoading(false)
