@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
+import Unauthorized from './pages/Unauthorized'
 import Navbar from './components/Navbar'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
@@ -25,12 +26,16 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Layout />}>
-          {/* public routes */}
+          <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='/' element={<BooksList />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/users/account-recovery' element={<></>} />
-          <Route path='/books/details/:bookID' element={<ShowBook />} />
+
+          {/* public routes */}
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
+            <Route path='/books/details/:bookID' element={<ShowBook />} />
+          </Route>
           
           {/* protect these routes */}
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
