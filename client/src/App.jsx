@@ -6,7 +6,7 @@ import EditBook from './pages/EditBook'
 import Login from './pages/Login'
 import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
-import Users from './pages/UsersList'
+import Admin from './pages/Admin'
 import Navbar from './components/Navbar'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
@@ -27,7 +27,7 @@ function App() {
           
           {/* protect these routes */}
           <Route element={<RequireAuth />}>
-            <Route path='/users' element={<Users />} />
+            <Route path='/admin' element={<Admin />} />
             <Route path='/books/create' element={<CreateBook />} />
             <Route path='/books/edit/:bookID' element={<EditBook />} />
             <Route path='/books/delete/:bookID' element={<DeleteBook />} />

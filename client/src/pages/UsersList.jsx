@@ -36,7 +36,7 @@ function Users() {
         controller.abort()
     }, [])
     return (
-        <article className='p-4'>
+        <>
             <div className='flex justify-between items-center'>
                 <h1 className='text-3xl my-8'>Users List</h1>
                 <Link to='/users/create'>
@@ -54,7 +54,7 @@ function Users() {
                     }
                 </>
             )}
-        </article>
+        </>
     )
 }
 

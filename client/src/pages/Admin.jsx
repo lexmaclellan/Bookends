@@ -3,11 +3,10 @@ import UsersList from './UsersList'
 
 function Admin() {
     return (
-        <section>
-            <h1>Admin</h1>
+        <article className='p-4'>
+            <h1 className='text-3xl my-8'>Admin</h1>
             <UsersList />
-            <Link to='/'>Home</Link>
-        </section>
+        </article>
     )
 }
 

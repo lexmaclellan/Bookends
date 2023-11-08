@@ -11,7 +11,7 @@ function Navbar() {
             </div>
             <nav className='flex items-center'>
                 <div>
-                    <Link className='px-5 py-2 text-gray-50 font-semibold hover:underline hover:text-sky-200' to='/users'>Users</Link>
+                    <Link className='px-5 py-2 text-gray-50 font-semibold hover:underline hover:text-sky-200' to='/admin'>Admin</Link>
                     <Link className='px-5 py-2 text-gray-50 font-semibold hover:underline hover:text-sky-200' to='/login'>Login</Link>
                     <Link className='px-5 py-2 text-gray-50 font-semibold hover:underline hover:text-sky-200' to='/signup'>Signup</Link>
                 </div>
