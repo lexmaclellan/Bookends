@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
-import axios from '../api/axios'
-import Spinner from '../components/Spinner'
-import UserCardGrid from '../components/Users/UserCardGrid'
+import axios from '../../api/axios'
+import Spinner from '../Spinner'
+import UserCardGrid from './UserCardGrid'
 const USERS_URL = '/api/users'
 
 function Users() {
     const [users, setUsers] = useState()
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         setLoading(true)
@@ -26,6 +28,7 @@ function Users() {
                 isMounted && setUsers.log(err)
                 setLoading(false)
                 console.error(err)
+                navigate('/login', { state: { from: location }, replace: true })
             }
         }
 

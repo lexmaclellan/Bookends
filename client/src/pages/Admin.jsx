@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import UsersList from './UsersList'
+import UsersList from '../components/Users/UsersList'
 
 function Admin() {
     return (
