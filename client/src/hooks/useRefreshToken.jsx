@@ -12,7 +12,11 @@ function useRefreshToken() {
     setAuth(prev => {
       console.log(JSON.stringify(prev))
       console.log(res.data.token)
-      return { ...prev, token: res.data.token }
+      return {
+        ...prev,
+        roles: res.data.roles,
+        token: res.data.token
+      }
     })
     return res.data.token
   }
