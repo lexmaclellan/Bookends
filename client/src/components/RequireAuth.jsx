@@ -4,7 +4,11 @@ import { useAuth } from '../hooks/useAuth'
 function RequireAuth({ allowedRoles }) {
     const { auth } = useAuth()
     const location = useLocation()
-    const userRoles = Object.values(auth.roles)
+    
+    let userRoles = []
+    if (auth.roles) {
+        userRoles = Object.values(auth.roles)
+    }
     
     return (
         userRoles.find(role => allowedRoles?.includes(role))
