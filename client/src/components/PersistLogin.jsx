@@ -20,7 +20,7 @@ function PersistLogin() {
             }
         }
 
-        !auth?.token ? verifyRefreshToken() : setIsLoading(false)
+        !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
     }, [])
 
     useEffect(() => {
