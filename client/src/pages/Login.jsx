@@ -1,13 +1,18 @@
-import { useRef, useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import { AuthContext } from '../context/AuthContext'
+import { useAuth } from '../hooks/useAuth'
 import axios from '../api/axios'
 const LOGIN_URL = '/api/users/auth'
 
 function Login() {
-    const { setAuth } = useContext(AuthContext)
+    const { setAuth } = useAuth()
+
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
+
+
     const emailRef = useRef()
     const errRef = useRef()
 
@@ -28,25 +33,28 @@ function Login() {
         e.preventDefault()
 
         try {
-            const res = await axios.post(
-                LOGIN_URL,
+            const res = await axios.post(LOGIN_URL,
                 JSON.stringify({ email, password }),
                 {
-                    //withCredentials: true,
-                    data: {},
                     headers: {
                         'Access-Control-Allow-Origin': 'http://localhost:5000',
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    data: {},
+                    //withCredentials: true
                 }
             )
+            console.log(JSON.stringify(res?.data))
+
             const accessToken = res?.data?.token
             const roles = res?.data?.roles
 
-            setAuth(email, password, roles, accessToken)
+            setAuth({ email, password, roles, accessToken })
             setEmail('')
             setPassword('')
             setSuccess(true)
+
+            navigate(from, { replace: true })
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No server response')

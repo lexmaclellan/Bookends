@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
-import axios from 'axios'
+import axios from '../api/axios'
 import Spinner from '../components/Spinner'
 import UserCardGrid from '../components/Users/UserCardGrid'
+const USERS_URL = '/api/users'
 
 function Users() {
     const [users, setUsers] = useState()
@@ -11,16 +12,28 @@ function Users() {
 
     useEffect(() => {
         setLoading(true)
-        axios
-            .get('http://localhost:5000/api/users')
-            .then((res) => {
-                setUsers(res.data.data.usersList)
+        let isMounted = true
+        const controller = new AbortController()
+
+        const getUsers = async () => {
+            try {
+                const res = await axios.get(USERS_URL, {
+                    signal: controller.signal
+                })
+                isMounted && setUsers(res.data.data.usersList)
                 setLoading(false)
-            })
-            .catch((err) => {
-                setUsers.log(err)
+            } catch (err) {
+                isMounted && setUsers.log(err)
                 setLoading(false)
-            })
+                console.error(err)
+            }
+        }
+
+        getUsers()
+
+        return () =>
+        isMounted = false
+        controller.abort()
     }, [])
     return (
         <article className='p-4'>
