@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useSnackbar } from 'notistack'
 import { useAuth } from '../hooks/useAuth'
 import axios from '../api/axios'
 const LOGIN_URL = '/api/users/auth'
