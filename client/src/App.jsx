@@ -11,6 +11,7 @@ import Unauthorized from './pages/Unauthorized'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequireAuth'
+import PersistLogin from './components/PersistLogin'
 
 const ROLES = {
   'Admin': 6401,
@@ -24,23 +25,25 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
+          {/* public routes */}
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='/' element={<BooksList />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/users/account-recovery' element={<></>} />
 
-          {/* public routes */}
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
-            <Route path='/books/details/:bookID' element={<ShowBook />} />
-          </Route>
-          
-          {/* protect these routes */}
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path='/admin' element={<Admin />} />
-            <Route path='/books/create' element={<CreateBook />} />
-            <Route path='/books/edit/:bookID' element={<EditBook />} />
-            <Route path='/books/delete/:bookID' element={<DeleteBook />} />
+          {/* protected routes */}
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
+              <Route path='/books/details/:bookID' element={<ShowBook />} />
+            </Route>
+            
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path='/admin' element={<Admin />} />
+              <Route path='/books/create' element={<CreateBook />} />
+              <Route path='/books/edit/:bookID' element={<EditBook />} />
+              <Route path='/books/delete/:bookID' element={<DeleteBook />} />
+            </Route>
           </Route>
 
           {/* catch all */}
