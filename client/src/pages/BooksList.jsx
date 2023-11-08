@@ -6,7 +6,7 @@ import Spinner from '../components/Spinner'
 import BookCardGrid from '../components/Books/BookCardGrid'
 const LOGIN_URL = '/api/books'
 
-function Home() {
+function BooksList() {
     const [books, setBooks] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -46,4 +46,4 @@ function Home() {
     )
 }
 
-export default Home
+export default BooksList

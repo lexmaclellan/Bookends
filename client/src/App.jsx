@@ -4,11 +4,11 @@ import CreateBook from './pages/CreateBooks'
 import DeleteBook from './pages/DeleteBook'
 import EditBook from './pages/EditBook'
 import Login from './pages/Login'
-import Logout from './pages/Logout'
 import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
+import AccountRecovery from './pages/AccountRecovery'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequireAuth'
@@ -31,12 +31,11 @@ function App() {
           <Route path='/' element={<BooksList />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/users/account-recovery' element={<></>} />
+          <Route path='/users/account-recovery' element={<AccountRecovery />} />
 
           {/* protected routes */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
-              <Route path='/logout' element={<Logout />} />
               <Route path='/books/details/:bookID' element={<ShowBook />} />
             </Route>
             

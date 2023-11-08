@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import useLogout from '../hooks/useLogout'
 
 function Navbar() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { auth } = useAuth()
+    const navigate = useNavigate()
     let location = useLocation()
+    const logout = useLogout()
+
+    const signOut = async () => {
+        await logout()
+        navigate('/login')
+    }
 
     useEffect(() => {
         if (auth.accessToken) {
@@ -42,7 +50,12 @@ function Navbar() {
                         </>
                         : <>
                             <li>
-                                <Link className='px-5 py-2 text-gray-50 font-semibold hover:underline hover:text-sky-200' to='/logout'>Logout</Link>
+                                <button
+                                    className='px-5 py-2 bg-transparent text-gray-50 font-semibold hover:underline hover:text-sky-200'
+                                    onClick={signOut}
+                                >
+                                    Logout
+                                </button>
                             </li>
                         </>
                     }
