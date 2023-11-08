@@ -41,7 +41,6 @@ function Login() {
             const roles = res?.data?.roles
 
             setAuth({ email, password, roles, accessToken })
-            localStorage.setItem('token', accessToken)
             setEmail('')
             setPassword('')
 
