@@ -66,12 +66,11 @@ function Signup() {
         }
 
         try {
-            const res = await axios.post(
-                REGISTER_URL,
+            const res = await axios.post(REGISTER_URL,
                 JSON.stringify({ email: email, password: pwd}),
                 {
                     headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+                    //withCredentials: true
                 }
             )
             setSuccess(true)
