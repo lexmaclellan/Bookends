@@ -34,9 +34,10 @@ function Users() {
 
         getUsers()
 
-        return () =>
-        isMounted = false
-        controller.abort()
+        return () => {
+            isMounted = false
+            controller.abort()
+        }
     }, [])
     return (
         <>
