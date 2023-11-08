@@ -26,10 +26,12 @@ function App() {
           <Route path='/books/details/:bookID' element={<ShowBook />} />
           
           {/* protect these routes */}
-          <Route path='/users' element={<Users />} />
-          <Route path='/books/create' element={<CreateBook />} />
-          <Route path='/books/edit/:bookID' element={<EditBook />} />
-          <Route path='/books/delete/:bookID' element={<DeleteBook />} />
+          <Route element={<RequireAuth />}>
+            <Route path='/users' element={<Users />} />
+            <Route path='/books/create' element={<CreateBook />} />
+            <Route path='/books/edit/:bookID' element={<EditBook />} />
+            <Route path='/books/delete/:bookID' element={<DeleteBook />} />
+          </Route>
 
           {/* catch all */}
           <Route path='*' element={<Missing />} />
