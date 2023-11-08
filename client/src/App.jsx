@@ -8,7 +8,6 @@ import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
-import Navbar from './components/Navbar'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequireAuth'
@@ -22,8 +21,7 @@ const ROLES = {
 
 function App() {
   return (
-    <main className='App'>
-      <Navbar />
+    <>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route path='/unauthorized' element={<Unauthorized />} />
@@ -49,7 +47,7 @@ function App() {
           <Route path='*' element={<Missing />} />
         </Route>
       </Routes>
-    </main>
+    </>
   )
 }
 
