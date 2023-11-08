@@ -70,7 +70,7 @@ function Signup() {
                 JSON.stringify({ email: email, password: pwd}),
                 {
                     headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
+                    //withCredentials: true
                 }
             )
             setSuccess(true)
