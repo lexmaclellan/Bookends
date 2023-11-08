@@ -9,6 +9,7 @@ import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
+import AccountRecovery from './pages/AccountRecovery'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequireAuth'
@@ -31,7 +32,7 @@ function App() {
           <Route path='/' element={<BooksList />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/users/account-recovery' element={<></>} />
+          <Route path='/users/account-recovery' element={<AccountRecovery />} />
 
           {/* protected routes */}
           <Route element={<PersistLogin />}>
