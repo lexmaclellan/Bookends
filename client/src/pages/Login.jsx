@@ -36,16 +36,12 @@ function Login() {
             const res = await axios.post(LOGIN_URL,
                 JSON.stringify({ email, password }),
                 {
-                    headers: {
-                        'Access-Control-Allow-Origin': 'http://localhost:5000',
-                        'Content-Type': 'application/json'
-                    },
-                    data: {},
-                    //withCredentials: true
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
                 }
             )
             console.log(JSON.stringify(res?.data))
-
+            
             const accessToken = res?.data?.token
             const roles = res?.data?.roles
 
