@@ -4,7 +4,6 @@ import CreateBook from './pages/CreateBooks'
 import DeleteBook from './pages/DeleteBook'
 import EditBook from './pages/EditBook'
 import Login from './pages/Login'
-import Logout from './pages/Logout'
 import ShowBook from './pages/ShowBook'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
@@ -37,7 +36,6 @@ function App() {
           {/* protected routes */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
-              <Route path='/logout' element={<Logout />} />
               <Route path='/books/details/:bookID' element={<ShowBook />} />
             </Route>
             
