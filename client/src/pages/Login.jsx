@@ -1,13 +1,13 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
-import useAuth from '../hooks/useAuth'
+import { AuthContext } from '../context/AuthContext'
 import axios from '../api/axios'
 const LOGIN_URL = '/api/users/auth'
 
 function Login() {
-    const { setAuth } = useAuth()
+    const { setAuth } = useContext(AuthContext)
     const emailRef = useRef()
     const errRef = useRef()
 
