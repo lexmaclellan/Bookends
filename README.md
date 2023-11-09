@@ -19,6 +19,7 @@ Bookends is an e-commerce app built using the MERN stack with Stripe integration
 
 1. Enter `npm run start`.
 2. In your browser, navigate to `http://localhost:5173`.
+3. Use [MongoDBCompass](https://www.mongodb.com/products/compass) if you need to access your local database.
 
 ## Technologies
 
