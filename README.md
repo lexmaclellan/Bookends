@@ -27,7 +27,7 @@ Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, and TailwindCSS
 
 ## License
 
-ANTI-CAPITALIST SOFTWARE LICENSE (v 1.4)
+[ANTI-CAPITALIST SOFTWARE LICENSE (v 1.4)](https://anticapitalist.software/)
 
 Copyright © 2023 lexrayne
 
