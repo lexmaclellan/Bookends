@@ -5,7 +5,7 @@ import { FaBars } from 'react-icons/fa6'
 import { useAuth } from '../hooks/useAuth'
 import useLogout from '../hooks/useLogout'
 
-function Navbar() {
+function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -79,4 +79,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default Header
