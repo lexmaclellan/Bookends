@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
 import BooksList from './pages/BooksList'
 import CreateBook from './pages/CreateBooks'
 import DeleteBook from './pages/DeleteBook'
@@ -28,7 +29,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           {/* public routes */}
           <Route path='/unauthorized' element={<Unauthorized />} />
-          <Route path='/' element={<BooksList />} />
+          <Route path='/' element={<Home />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/users/account-recovery' element={<AccountRecovery />} />

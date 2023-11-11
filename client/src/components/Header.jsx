@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import { IoLibrary } from 'react-icons/io5'
-import { FaBars } from 'react-icons/fa6'
+import { FaBars, FaCartShopping, FaUser } from 'react-icons/fa6'
 import { useAuth } from '../hooks/useAuth'
 import useLogout from '../hooks/useLogout'
 
@@ -33,8 +35,10 @@ function Header() {
         }
     }, [location])
 
-    return (
-        <header className='shadow-md w-full'>
+
+    const oldHeader = () => {
+        return (
+            <header className='shadow-md w-full'>
             <div className='flex bg-slate-900 items-center justify-between py-4 px-10'>
                 <div className='font-bold text-2xl flex items-center text-gray-50 '>
                     <Link className='hover:underline hover:text-sky-200 flex' to='/'>
@@ -75,6 +79,39 @@ function Header() {
                     </li>
                 </ul>
             </div>
+        </header>
+        )
+    }
+
+    return (
+        <header>
+            <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+                <Container>
+                    <LinkContainer to='/'>
+                        <Navbar.Brand className='flex'>
+                            <span className='flex-col text-3xl mr-2'><IoLibrary /></span>
+                            <span className='flex-col text-2xl'>Bookends</span>
+                        </Navbar.Brand>
+                    </LinkContainer>
+                    <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                    <Navbar.Collapse id='basic-navbar-nav'>
+                        <Nav className='ms-auto'>
+                            <LinkContainer to='/cart'>
+                                <Nav.Link className='flex'>
+                                    <span className='flex-col text-xl mr-2'><FaCartShopping /></span>
+                                    <span className='flex-col text-lg'>Cart</span>
+                                </Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/login'>
+                                <Nav.Link className='flex'>
+                                    <span className='flex-col text-xl mr-2'><FaUser /></span>
+                                    <span className='flex-col text-lg'>Sign In</span>
+                                </Nav.Link>
+                            </LinkContainer>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </header>
     )
 }
