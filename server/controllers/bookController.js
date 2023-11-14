@@ -57,6 +57,7 @@ module.exports = {
                 coverURL: req.body.coverURL,
                 description: req.body.description,
                 publishedYear: req.body.publishedYear,
+                rating: req.body.rating,
                 standardPrice: req.body.standardPrice,
                 salePrice: req.body.salePrice
             }
