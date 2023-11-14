@@ -30,6 +30,12 @@ const bookSchema = new Schema(
         salePrice: {
             type: Number,
         },
+        rating: {
+            type: Number
+        },
+        numReviews: {
+            type: Number
+        },
         numInStock: {
             type: Number,
             required: true,

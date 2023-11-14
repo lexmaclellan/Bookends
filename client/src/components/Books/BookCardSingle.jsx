@@ -7,6 +7,7 @@ import { AiOutlineEdit } from 'react-icons/ai'
 import { BsInfoCircle } from 'react-icons/bs'
 import { MdOutlineDelete } from 'react-icons/md'
 import BookModal from './BookModal'
+import Rating from './Rating'
 
 function BookCardSingle({ book }) {
     const [showModal, setShowModal] = useState(false)
@@ -63,6 +64,10 @@ function BookCardSingle({ book }) {
                         <h3>{book.author}</h3>
                     </Card.Title>
                 </Link>
+
+                <Card.Text as='div'>
+                    <Rating value={book.rating} text={book.numReviews} />
+                </Card.Text>
 
                 <Card.Text as='h3'>
                     ${book.standardPrice}
