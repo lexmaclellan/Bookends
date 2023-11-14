@@ -55,10 +55,10 @@ function ShowBook() {
         <Spinner />
       ) : (
         <Row>
-          <Col md={5}>
+          <Col md={3}>
             <Image src={book.coverURL} alt={book.title} fluid />
           </Col>
-          <Col md={4}>
+          <Col md={6}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h2 className='font-bold text-2xl mb-1'>{book.title}</h2>
