@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const bookSchema = new Schema(
-    {
+{
         title: {
             type: String,
             required: true
@@ -33,9 +33,7 @@ const bookSchema = new Schema(
         rating: {
             type: Number
         },
-        numReviews: {
-            type: Number
-        },
+        reviews: [reviewSchema],
         numInStock: {
             type: Number,
             required: true,
@@ -55,6 +53,10 @@ const bookSchema = new Schema(
         id: false
     }
 )
+
+bookSchema.virtual('numReviews').get(function () {
+    return this.reviews.length
+})
 
 const Book = model('Book', bookSchema)
 
