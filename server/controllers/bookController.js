@@ -45,7 +45,8 @@ module.exports = {
             if (
                 !req.body.title || 
                 !req.body.author || 
-                !req.body.publishedYear
+                !req.body.publishedYear ||
+                !req.body.standardPrice
             ) {
                 return res.status(400).json({ message: 'Send all required fields: title, author, publishedYear' })
             }
@@ -53,7 +54,11 @@ module.exports = {
             const newBook = {
                 title: req.body.title,
                 author: req.body.author,
-                publishedYear: req.body.publishedYear
+                coverURL: req.body.coverURL,
+                description: req.body.description,
+                publishedYear: req.body.publishedYear,
+                standardPrice: req.body.standardPrice,
+                salePrice: req.body.salePrice
             }
             
             const book = await Book.create(newBook)
@@ -69,14 +74,6 @@ module.exports = {
     // @access  Public
     async updateBook(req, res) {
         try {
-            if (
-                !req.body.title || 
-                !req.body.author || 
-                !req.body.publishedYear
-            ) {
-                return res.status(400).json({ message: 'Send all required fields: title, author, publishedYear' })
-            }
-
             const updatedBook = new Types.ObjectId(req.params.bookID)
             const book = await Book.findByIdAndUpdate(
                 updatedBook,
