@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
-import axios from 'axios'
+import axios from '../api/axios'
 import BackButton from '../components/BackButton'
 import Spinner from '../components/Spinner'
 import Rating from '../components/Books/Rating'
@@ -14,9 +14,8 @@ function ShowBook() {
   useEffect(() => {
     setLoading(true)
     axios
-      .get(`http://localhost:5000/api/books/${bookID}`)
+      .get(`/api/books/${bookID}`)
       .then((res) => {
-        console.log(`Book ID: ${bookID}`)
         setBook(res.data)
         setLoading(false)
       })
