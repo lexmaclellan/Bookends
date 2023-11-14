@@ -77,4 +77,4 @@ const orderSchema = new Schema({
 
 const Order = model('Order', orderSchema)
 
-export default Order
+module.exports = Order
