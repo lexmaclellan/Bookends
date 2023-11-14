@@ -1,12 +1,16 @@
 import { Outlet } from 'react-router-dom'
-import Navbar from './Navbar'
+import Header from './Header'
+import Footer from './Footer'
 
 function Layout() {
   return (
-    <main className='App'>
-      <Navbar />
-      <Outlet />
-    </main>
+    <>
+      <Header />
+      <main className='App py-3'>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
   )
 }
 
