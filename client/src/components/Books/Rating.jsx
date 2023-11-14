@@ -26,7 +26,7 @@ const Rating = ({ value, text }) => {
                     <span className='flex-col'>
                         { value >= 5 ? <FaStar /> : value >= 4.5 ? <FaRegStarHalf /> : <FaRegStar /> }
                     </span>
-                    <span className='rating-text flex-col'>{ text && `${text} Reviews` }</span>
+                    <span className='rating-text flex-col'>{ text && text }</span>
                 </section>
             :
                 <section className='rating mb-2'>

@@ -66,7 +66,7 @@ function BookCardSingle({ book }) {
                 </Link>
 
                 <Card.Text as='div'>
-                    <Rating value={book.rating} text={book.numReviews} />
+                    <Rating value={book.rating} text={`${book.numReviews} Reviews`} />
                 </Card.Text>
 
                 <Card.Text as='h3'>
