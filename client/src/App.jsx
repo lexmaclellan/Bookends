@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import BooksList from './pages/BooksList'
 import CreateBook from './pages/CreateBooks'
 import DeleteBook from './pages/DeleteBook'
 import EditBook from './pages/EditBook'
-import Login from './pages/Login'
 import ShowBook from './pages/ShowBook'
+import Cart from './pages/Cart'
+import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
@@ -32,6 +32,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/cart' element={<Cart />} />
           <Route path='/users/account-recovery' element={<AccountRecovery />} />
           <Route path='/books/details/:bookID' element={<ShowBook />} />
 

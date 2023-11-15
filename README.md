@@ -23,7 +23,7 @@ Bookends is an e-commerce app built using the MERN stack with Stripe integration
 
 ## Technologies
 
-Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, Bootstrap, and TailwindCSS
+Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, Redux, Bootstrap, and TailwindCSS
 
 ## License
 
@@ -38,13 +38,13 @@ Permission is hereby granted, free of charge, to any person or organization (the
 1. The above copyright notice and this permission notice shall be included in all copies or modified versions of the Software.
 
 2. The User is one of the following:
-- a. An individual person, laboring for themselves
-- b. A non-profit organization
-- c. An educational institution
-- d. An organization that seeks shared profit for all of its members, and allows non-members to set the cost of their labor
+   1. An individual person, laboring for themselves
+   2. A non-profit organization
+   3. An educational institution
+   4. An organization that seeks shared profit for all of its members, and allows non-members to set the cost of their labor
 
-3. If the User is an organization with owners, then all owners are workers and all workers are owners with equal equity and/or equal vote.
+4. If the User is an organization with owners, then all owners are workers and all workers are owners with equal equity and/or equal vote.
 
-4. If the User is an organization, then the User is not law enforcement or military, or working for or under either.
+5. If the User is an organization, then the User is not law enforcement or military, or working for or under either.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT EXPRESS OR IMPLIED WARRANTY OF ANY KIND, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

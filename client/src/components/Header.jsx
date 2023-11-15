@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import { IoLibrary } from 'react-icons/io5'
@@ -8,6 +9,8 @@ import { useAuth } from '../hooks/useAuth'
 import useLogout from '../hooks/useLogout'
 
 function Header() {
+    const { cartItems } = useSelector((state) => state.cart)
+
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -99,7 +102,15 @@ function Header() {
                             <LinkContainer to='/cart'>
                                 <Nav.Link className='flex'>
                                     <span className='flex-col text-xl mr-2 text-stone-200'><FaCartShopping /></span>
-                                    <span className='flex-col text-lg text-stone-200'>Cart</span>
+                                    <span className='flex-col text-lg text-stone-200'>Cart
+                                    {
+                                        cartItems.length > 0 && (
+                                            <> (
+                                                { cartItems.reduce((acc, item) => acc + item.qty, 0) }
+                                            ) </>
+                                        )
+                                    }
+                                    </span>
                                 </Nav.Link>
                             </LinkContainer>
                             {!isAuthenticated
