@@ -7,6 +7,14 @@ body {
     color: #44403c;
 }
 
+a {
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
 .hide {
     display: none;
 }
