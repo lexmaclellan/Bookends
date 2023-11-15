@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import { Container, Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import BackButton from '../components/BackButton'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -12,7 +12,7 @@ function ShowBook() {
   const { data: book, isLoading, error } = useGetBookDetailsQuery(bookID)
 
   return (
-    <article className='p-4'>
+    <Container>
       <BackButton />
       <h1 className='text-3xl my-4 text-stone-700'>Book Details</h1>
       {isLoading ? (
@@ -46,7 +46,7 @@ function ShowBook() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Price:</Col>
-                    <Col className='text-lg font-semibold'>
+                    <Col className='text-lg font-semibold text-right'>
                       ${book.standardPrice}
                     </Col>
                   </Row>
@@ -55,13 +55,13 @@ function ShowBook() {
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
-                    <Col className='text-lg font-semibold'>
+                    <Col className='text-lg font-semibold text-right'>
                       {book.numInStock > 0 ? 'In Stock' : 'Out of Stock'}
                     </Col>
                   </Row>
                 </ListGroup.Item>
 
-                <ListGroup.Item>
+                <ListGroup.Item className='text-right'>
                   <Button
                     className='bg-slate-700 hover:bg-slate-400 text-gray-50'
                     type='button'
@@ -75,7 +75,7 @@ function ShowBook() {
           </Col>
         </Row>
       )}
-    </article>
+    </Container>
   )
 }
 
