@@ -28,10 +28,7 @@ function Home() {
         <Container>
             <Row>
                 <div className='flex justify-between items-center'>
-                    <h1 className='text-3xl my-8'>Welcome to Bookends</h1>
-                    <Link to='/books/create'>
-                        <MdOutlineAddBox className='text-slate-200 text-4xl' />
-                    </Link>
+                    <h1 className='text-3xl my-8 text-stone-700'>Welcome to Bookends</h1>
                 </div>
             </Row>
             <Row>
