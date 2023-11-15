@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { FaTrashCan } from 'react-icons/fa6'
-import { addToCart } from '../slices/cartSlice'
+import { addToCart, removeFromCart } from '../slices/cartSlice'
 import Message from '../components/Message'
 
 const Cart = () => {
@@ -14,6 +14,14 @@ const Cart = () => {
 
     const addToCartHandler = async (item, qty) => {
         dispatch(addToCart({...item, qty}))
+    }
+
+    const removeFromCartHandler = async (id) => {
+        dispatch(removeFromCart(id))
+    }
+
+    const checkoutHandler = () => {
+        console.log('hello')
     }
 
     return (
@@ -58,7 +66,11 @@ const Cart = () => {
                                             </Form.Control>
                                         </Col>
                                         <Col md={2}>
-                                            <Button type='button' variant='light'>
+                                            <Button
+                                                type='button'
+                                                variant='light'
+                                                onClick={() => removeFromCartHandler(item._id)}
+                                            >
                                                 <FaTrashCan />
                                             </Button>
                                         </Col>
@@ -84,6 +96,7 @@ const Cart = () => {
                                     type='button'
                                     className='btn-block bg-stone-700 text-stone-100 font-semibold rounded-md'
                                     disabled={ cartItems.length === 0 }
+                                    onClick={ checkoutHandler }
                                 >
                                     Checkout
                                 </Button>
