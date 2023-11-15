@@ -1,29 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { MdOutlineAddBox } from 'react-icons/md'
-import axios from '../api/axios'
-import Spinner from '../components/Spinner'
+import { useGetBooksQuery } from '../slices/booksApiSlice'
+import Loader from '../components/Loader'
 import BookCardGrid from '../components/Books/BookCardGrid'
 const LOGIN_URL = '/api/books'
 
 function Home() {
-    const [books, setBooks] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        setLoading(true)
-        axios
-            .get(LOGIN_URL)
-            .then((res) => {
-                setBooks(res.data.data)
-                setLoading(false)
-            })
-            .catch((err) => {
-                setBooks.log(err)
-                setLoading(false)
-            })
-    }, [])
+    const { data: books, isLoading, error } = useGetBooksQuery()
+    
     return (
         <Container>
             <Row>
@@ -32,13 +17,17 @@ function Home() {
                 </div>
             </Row>
             <Row>
-                {loading ? (
-                    <Spinner />
+                {isLoading ? (
+                    <Loader />
+                ) : error ? (
+                    <div className='text-stone-700'>
+                        { error?.data?.message || error.error }
+                    </div>
                 ) : (
                     <>
-                        {books?.length
+                        {books?.data?.length
                             ? (
-                                <BookCardGrid books={books} />
+                                <BookCardGrid books={books.data} />
                             ) : <p>No books to display</p>
                         }
                     </>

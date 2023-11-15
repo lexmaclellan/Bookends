@@ -1,57 +1,25 @@
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
-import axios from '../api/axios'
 import BackButton from '../components/BackButton'
-import Spinner from '../components/Spinner'
+import Loader from '../components/Loader'
 import Rating from '../components/Books/Rating'
+import { useGetBookDetailsQuery } from '../slices/booksApiSlice'
 
 function ShowBook() {
-  const [book, setBook] = useState([])
-  const [loading, setLoading] = useState(false)
   const { bookID } = useParams()
 
-  useEffect(() => {
-    setLoading(true)
-    axios
-      .get(`/api/books/${bookID}`)
-      .then((res) => {
-        setBook(res.data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.log(err)
-        setLoading(false)
-      })
-  }, [])
-
-  const oldCode = () => {
-    <div className='flex flex-col border-2 border-sky-400 rounded-x1 w-fit p-4'>
-      <div className='my-4'>
-        <span className='text-xl mr-4 text-gray-500'>ID</span>
-        <span>{book._id}</span>
-      </div>
-      <div className='my-4'>
-        <span className='text-xl mr-4 text-gray-500'>Title</span>
-        <span>{book.title}</span>
-      </div>
-      <div className='my-4'>
-        <span className='text-xl mr-4 text-gray-500'>Author</span>
-        <span>{book.author}</span>
-      </div>
-      <div className='my-4'>
-        <span className='text-xl mr-4 text-gray-500'>Year Published</span>
-        <span>{book.publishedYear}</span>
-      </div>
-    </div>
-  }
+  const { data: book, isLoading, error } = useGetBookDetailsQuery(bookID)
 
   return (
     <article className='p-4'>
       <BackButton />
       <h1 className='text-3xl my-4 text-stone-700'>Book Details</h1>
-      {loading ? (
-        <Spinner />
+      {isLoading ? (
+        <Loader />
+      ) : error ? (
+        <div className='text-stone-700'>
+          {error?.data?.message || error.error}
+        </div>
       ) : (
         <Row>
           <Col md={3}>
@@ -87,7 +55,7 @@ function ShowBook() {
                   <Row>
                     <Col>Status:</Col>
                     <Col className='text-lg font-semibold'>
-                      {book.numInStock > 0 ? 'In Stock' : 'Out of Stock' }
+                      {book.numInStock > 0 ? 'In Stock' : 'Out of Stock'}
                     </Col>
                   </Row>
                 </ListGroup.Item>
