@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { MdOutlineAddBox } from 'react-icons/md'
 import { useGetBooksQuery } from '../slices/booksApiSlice'
 import Loader from '../components/Loader'
+import Message from '../components/Message'
 import BookCardGrid from '../components/Books/BookCardGrid'
 const LOGIN_URL = '/api/books'
 
@@ -20,9 +21,9 @@ function Home() {
                 {isLoading ? (
                     <Loader />
                 ) : error ? (
-                    <div className='text-stone-700'>
+                    <Message variant='danger'>
                         { error?.data?.message || error.error }
-                    </div>
+                    </Message>
                 ) : (
                     <>
                         {books?.data?.length

@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import BackButton from '../components/BackButton'
 import Loader from '../components/Loader'
+import Message from '../components/Message'
 import Rating from '../components/Books/Rating'
 import { useGetBookDetailsQuery } from '../slices/booksApiSlice'
 
@@ -17,9 +18,9 @@ function ShowBook() {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <div className='text-stone-700'>
+        <Message variant='danger'>
           {error?.data?.message || error.error}
-        </div>
+        </Message>
       ) : (
         <Row>
           <Col md={3}>
