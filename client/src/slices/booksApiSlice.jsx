@@ -8,8 +8,14 @@ export const booksApiSlice = apiSlice.injectEndpoints({
                 url: BOOKS_URL
             }),
             keepUnusedDataFor: 5
+        }),
+        getBookDetails: builder.query({
+            query: (bookID) => ({
+                url: `${BOOKS_URL}/${bookID}`
+            }),
+            keepUnusedDataFor: 5
         })
     })
 })
 
-export const { useGetBooksQuery } = booksApiSlice
+export const { useGetBooksQuery, useGetBookDetailsQuery } = booksApiSlice
