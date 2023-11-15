@@ -49,7 +49,7 @@ function ShowBook() {
   return (
     <article className='p-4'>
       <BackButton />
-      <h1 className='text-3xl my-4'>Book Details</h1>
+      <h1 className='text-3xl my-4 text-stone-700'>Book Details</h1>
       {loading ? (
         <Spinner />
       ) : (

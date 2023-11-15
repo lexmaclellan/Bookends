@@ -63,7 +63,7 @@ function Login() {
     return (
         <>
             <article className='p-4 flex justify-center items-center h-screen'>
-                <section className='w-96 shadow-lg p-7 bg-slate-700 rounded-md'>
+                <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
                     <h3 className='text-2xl block text-center font-semibold'>Login</h3>
                     <form onSubmit={handleSubmit}>
                         <hr className='mt-6' />
@@ -109,7 +109,7 @@ function Login() {
                             </span>
                         </section>
 
-                        <button className='mt-6 py-1 w-full bg-gray-800 text-slate-300 border-2 border-slate-500 font-semibold rounded-md'>
+                        <button className='mt-6 py-1 w-full bg-stone-800 text-stone-300 border-2 border-stone-500 font-semibold rounded-md'>
                             Log In
                         </button>
                     </form>
