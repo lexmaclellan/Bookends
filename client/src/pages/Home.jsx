@@ -8,7 +8,11 @@ import BookCardGrid from '../components/Books/BookCardGrid'
 const LOGIN_URL = '/api/books'
 
 function Home() {
-    const { data: books, isLoading, error } = useGetBooksQuery()
+    const {
+        data: books,
+        isLoading,
+        error
+    } = useGetBooksQuery()
     
     return (
         <Container>
