@@ -5,7 +5,7 @@ function Missing() {
   return (
     <Container className='text-stone-700'>
         <h1 className='font-semibold text-2xl mb-2'>404 Page Not Found</h1>
-        <Link to='/' className='font-semibold underline hover:no-underline'>Return Home</Link>
+        <Link to='/'>Return Home</Link>
     </Container>
   )
 }
