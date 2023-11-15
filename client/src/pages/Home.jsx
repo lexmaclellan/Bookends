@@ -28,7 +28,7 @@ function Home() {
         <Container>
             <Row>
                 <div className='flex justify-between items-center'>
-                    <h1 className='text-3xl my-8 text-stone-700'>Welcome to Bookends</h1>
+                    <h1 className='text-3xl my-3 text-stone-700'>Welcome to Bookends</h1>
                 </div>
             </Row>
             <Row>
