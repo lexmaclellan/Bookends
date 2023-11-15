@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import useRefreshToken from '../hooks/useRefreshToken'
 import { useAuth } from '../hooks/useAuth'
-import Spinner from '../components/Spinner'
+import Loader from '../components/Loader'
 
 function PersistLogin() {
     const [isLoading, setIsLoading] = useState(true)
@@ -31,7 +31,7 @@ function PersistLogin() {
   return (
     <>
         {isLoading
-            ? <Spinner />
+            ? <Loader />
             : <Outlet />
         }
     </>
