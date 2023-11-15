@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
 import axios from '../api/axios'
-import Spinner from '../components/Spinner'
+import Loader from '../components/Loader'
 import BookCardGrid from '../components/Books/BookCardGrid'
 const LOGIN_URL = '/api/books'
 
@@ -32,7 +32,7 @@ function BooksList() {
                 </Link>
             </div>
             {loading ? (
-                <Spinner />
+                <Loader />
             ) : (
                 <>
                     {books?.length
