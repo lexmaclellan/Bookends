@@ -74,7 +74,7 @@ Now, Mahit must discover who is behind the murder, rescue herself, and save her 
     {
         title: "A Desolation Called Peace",
         author: "Arkady Martine",
-        coverURL: "/images/a-memory-called-empire.jpg",
+        coverURL: "/images/a-desolation-called-peace.jpg",
         publishedYear: 2021,
         standardPrice: 19.99,
         numInStock: 3,
@@ -93,7 +93,7 @@ Whether they succeed or fail could change the fate of Teixcalaan forever.`
         standardPrice: 15.99,
         numInStock: 0,
         rating: 5,
-        description: `Among the ashes of a dying world, an agent of the Commandant finds a letter. It reads: <span style="font-style: italic;">Burn before reading.</span> Thus begins an unlikely correspondence between two rival agents hellbent on securing the best possible future for their warring factions. Now, what began as a taunt, a battlefield boast, grows into something more. Something epic. Something romantic. Something that could change the past and the future.
+        description: `Among the ashes of a dying world, an agent of the Commandant finds a letter. It reads: Burn before reading. Thus begins an unlikely correspondence between two rival agents hellbent on securing the best possible future for their warring factions. Now, what began as a taunt, a battlefield boast, grows into something more. Something epic. Something romantic. Something that could change the past and the future.
 
 Except the discovery of their bond would mean death for each of them. There's still a war going on, after all. And someone has to win that war.`
     }
