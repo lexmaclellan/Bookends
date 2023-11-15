@@ -1,15 +1,31 @@
-import { useParams } from 'react-router-dom'
-import { Container, Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import { useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Container, Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import { useGetBookDetailsQuery } from '../slices/booksApiSlice'
+import { addToCart } from '../slices/cartSlice'
 import BackButton from '../components/BackButton'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Rating from '../components/Books/Rating'
-import { useGetBookDetailsQuery } from '../slices/booksApiSlice'
+
 
 function ShowBook() {
   const { bookID } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const { data: book, isLoading, error } = useGetBookDetailsQuery(bookID)
+  const [qty, setQty] = useState(1)
+  const {
+    data: book,
+    isLoading,
+    error
+  } = useGetBookDetailsQuery(bookID)
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...book, qty }))
+    navigate('/cart')
+  }
 
   return (
     <Container>
@@ -61,11 +77,33 @@ function ShowBook() {
                   </Row>
                 </ListGroup.Item>
 
+                {book.numInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                        >
+                          { [...Array(book.numInStock).keys()].map((i) => (
+                            <option key={i + 1} value={i + 1}>
+                              {i + 1}
+                            </option>
+                          )) }
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+
                 <ListGroup.Item className='text-right'>
                   <Button
                     className='bg-slate-700 hover:bg-slate-400 text-gray-50'
                     type='button'
                     disabled={book.numInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add to Cart
                   </Button>
