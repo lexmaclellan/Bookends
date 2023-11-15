@@ -62,7 +62,7 @@ function Login() {
 
     return (
         <>
-            <article className='p-4 flex justify-center items-center h-screen'>
+            <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
                 <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
                     <h3 className='text-2xl block text-center font-semibold'>Login</h3>
                     <form onSubmit={handleSubmit}>
@@ -117,7 +117,7 @@ function Login() {
                         <span></span>
                         <span>
                             <p className='mt-2 text-base'>
-                                <Link to='/signup' className='text-sm text- font-semibold underline hover:no-underline'>
+                                <Link to='/signup' className='text-sm font-semibold'>
                                     Sign Up
                                 </Link>
                             </p>
