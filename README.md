@@ -23,7 +23,7 @@ Bookends is an e-commerce app built using the MERN stack with Stripe integration
 
 ## Technologies
 
-Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, Bootstrap, and TailwindCSS
+Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, Redux, Bootstrap, and TailwindCSS
 
 ## License
 
