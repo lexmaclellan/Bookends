@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server/server.js --ignore client",
     "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "data:seed": "node server/seeder.js",
+    "data:destroy": "node server/seeder.js -d",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },

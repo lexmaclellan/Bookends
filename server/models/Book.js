@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const reviewSchema = require('./Review')
 
 const bookSchema = new Schema(
 {

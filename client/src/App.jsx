@@ -33,11 +33,11 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/users/account-recovery' element={<AccountRecovery />} />
+          <Route path='/books/details/:bookID' element={<ShowBook />} />
 
           {/* protected routes */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} /> }>
-              <Route path='/books/details/:bookID' element={<ShowBook />} />
             </Route>
             
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>

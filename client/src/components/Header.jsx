@@ -39,7 +39,7 @@ function Header() {
     const oldHeader = () => {
         return (
             <header className='shadow-md w-full'>
-            <div className='flex bg-slate-900 items-center justify-between py-4 px-10'>
+            <div className='flex bg-stone-500 items-center justify-between py-4 px-10'>
                 <div className='font-bold text-2xl flex items-center text-gray-50 '>
                     <Link className='hover:underline hover:text-sky-200 flex' to='/'>
                         <span className='text-3xl text-gray-50 mr-1 flex-col'>
@@ -85,12 +85,12 @@ function Header() {
 
     return (
         <header>
-            <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar className='bg-stone-600' expand='lg' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
                         <Navbar.Brand className='flex'>
-                            <span className='flex-col text-3xl mr-2'><IoLibrary /></span>
-                            <span className='flex-col text-2xl'>Bookends</span>
+                            <span className='flex-col text-3xl mr-2 text-stone-200'><IoLibrary /></span>
+                            <span className='flex-col text-2xl text-stone-200'>Bookends</span>
                         </Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -98,16 +98,26 @@ function Header() {
                         <Nav className='ms-auto'>
                             <LinkContainer to='/cart'>
                                 <Nav.Link className='flex'>
-                                    <span className='flex-col text-xl mr-2'><FaCartShopping /></span>
-                                    <span className='flex-col text-lg'>Cart</span>
+                                    <span className='flex-col text-xl mr-2 text-stone-200'><FaCartShopping /></span>
+                                    <span className='flex-col text-lg text-stone-200'>Cart</span>
                                 </Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to='/login'>
-                                <Nav.Link className='flex'>
-                                    <span className='flex-col text-xl mr-2'><FaUser /></span>
-                                    <span className='flex-col text-lg'>Sign In</span>
-                                </Nav.Link>
-                            </LinkContainer>
+                            {!isAuthenticated
+                                ?
+                                    <LinkContainer to='/login'>
+                                        <Nav.Link className='flex'>
+                                            <span className='flex-col text-xl mr-2 text-stone-200'><FaUser /></span>
+                                            <span className='flex-col text-lg text-stone-200'>Sign In</span>
+                                        </Nav.Link>
+                                    </LinkContainer>
+                                :
+                                    <LinkContainer to='/logout'>
+                                        <Nav.Link className='flex'>
+                                            <span className='flex-col text-xl mr-2 text-stone-200'><FaUser /></span>
+                                            <span className='flex-col text-lg text-stone-200'>Logout</span>
+                                        </Nav.Link>
+                                    </LinkContainer>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
