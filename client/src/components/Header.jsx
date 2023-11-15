@@ -102,12 +102,22 @@ function Header() {
                                     <span className='flex-col text-lg text-stone-200'>Cart</span>
                                 </Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to='/login'>
-                                <Nav.Link className='flex'>
-                                    <span className='flex-col text-xl mr-2 text-stone-200'><FaUser /></span>
-                                    <span className='flex-col text-lg text-stone-200'>Sign In</span>
-                                </Nav.Link>
-                            </LinkContainer>
+                            {!isAuthenticated
+                                ?
+                                    <LinkContainer to='/login'>
+                                        <Nav.Link className='flex'>
+                                            <span className='flex-col text-xl mr-2 text-stone-200'><FaUser /></span>
+                                            <span className='flex-col text-lg text-stone-200'>Sign In</span>
+                                        </Nav.Link>
+                                    </LinkContainer>
+                                :
+                                    <LinkContainer to='/logout'>
+                                        <Nav.Link className='flex'>
+                                            <span className='flex-col text-xl mr-2 text-stone-200'><FaUser /></span>
+                                            <span className='flex-col text-lg text-stone-200'>Logout</span>
+                                        </Nav.Link>
+                                    </LinkContainer>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
