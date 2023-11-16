@@ -32,6 +32,14 @@ a:hover {
     background-color: #a1a1aa;
 }
 
+.card a {
+    text-decoration: none;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
 .profile a {
     color: #e7e5e4;
 }
