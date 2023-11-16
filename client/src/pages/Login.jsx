@@ -1,152 +1,52 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import { useAuth } from '../hooks/useAuth'
-import axios from '../api/axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCredentials } from '../slices/authSlice'
+import { useLoginMutation } from '../slices/usersApiSlice'
+import { toast } from 'react-toastify'
 import FormContainer from '../components/FormContainer'
-const LOGIN_URL = '/api/users/auth'
+import Loader from '../components/Loader'
 
 const Login = () => {
-    const { setAuth } = useAuth()
-
-    const navigate = useNavigate()
-    const location = useLocation()
-    const from = location.state?.from?.pathname || '/'
-
-    const emailRef = useRef()
-    const errRef = useRef()
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [errMsg, setErrMsg] = useState('')
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const [login, { isLoading }] = useLoginMutation()
+    const { userInfo } = useSelector((state) => state.auth)
+
+    const { search } = useLocation
+    const sp = new URLSearchParams(search)
+    const redirect = sp.get('redirect') || '/'
 
     useEffect(() => {
-        emailRef.current.focus()
-    }, [])
-
-    useEffect(() => {
-        setErrMsg('')
-    }, [email, password])
+        if (userInfo)
+            navigate(redirect)
+    }, [userInfo, redirect, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         try {
-            const res = await axios.post(LOGIN_URL,
-                JSON.stringify({ email, password }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    //withCredentials: true
-                }
-            )
-            const accessToken = res?.data?.accessToken
-            const roles = res?.data?.roles
-
-            setAuth({ email, password, roles, accessToken })
-            setEmail('')
-            setPassword('')
-
-            navigate(from, { replace: true })
+            const res = await login({ email, password }).unwrap()
+            dispatch(setCredentials({...res}))
+            navigate(redirect)
         } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No server response')
-                console.log(err)
-            } else if (err.response?.status === 400) {
-                setErrMsg('Missing email address or password')
-            } else if (err.response?.status === 401) {
-                setErrMsg('Unauthorized')
-            } else {
-                setErrMsg('Login failed')
-            }
-            errRef.current.focus()
+            toast.error(err?.data?.message || err.error)
         }
     }
 
-    const oldCode = () => {
-        return (
-            <>
-                <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
-                    <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
-                        <h3 className='text-2xl block text-center font-semibold'>Login</h3>
-                        <form onSubmit={handleSubmit}>
-                            <hr className='mt-6' />
-                            <section className='mt-2 font-semibold'>
-                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
-                                    {errMsg}
-                                </p>
-                            </section>
-                            <section className='mt-3'>
-                                <label htmlFor='email' className='block text-base mb-1'>Email Address:</label>
-                                <input
-                                    type='email'
-                                    id='email'
-                                    ref={emailRef}
-                                    className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
-                                    placeholder='your.name@example.com'
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    value={email}
-                                    required
-                                />
-                            </section>
-
-                            <section className='mt-3'>
-                                <label htmlFor='password' className='block text-base mb-1'>Password:</label>
-                                <input
-                                    type='password'
-                                    id='password'
-                                    className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
-                                    placeholder='********'
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    value={password}
-                                    required
-                                />
-                            </section>
-
-                            <section className='mt-1 flex justify-between items-center'>
-                                <span>
-                                    <input type='checkbox' id='checkbox' className='mr-1' />
-                                    <label htmlFor='checkbox' className='text-sm'>Remember Me</label>
-                                </span>
-                                <span>
-                                    <Link to='/users/account-recovery' className='text-sm'>Forgot Password?</Link>
-                                </span>
-                            </section>
-
-                            <button className='mt-6 py-1 w-full bg-stone-800 text-stone-300 border-2 border-stone-500 font-semibold rounded-md'>
-                                Log In
-                            </button>
-                        </form>
-                        <section className='mt-1 flex justify-between items-center'>
-                            <span></span>
-                            <span>
-                                <p className='mt-2 text-base'>
-                                    <Link to='/signup' className='text-sm font-semibold'>
-                                        Sign Up
-                                    </Link>
-                                </p>
-                            </span>
-                        </section>
-                    </section>
-                </article>
-            </>
-        )
-    }
     return (
         <FormContainer>
             <h3 className='text-2xl block text-center font-semibold'>Login</h3>
 
             <Form onSubmit={handleSubmit}>
-                <Form.Group controlId='err'>
-                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
-                        {errMsg}
-                    </p>
-                </Form.Group>
                 <Form.Group controlId='email' className='my-3'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
                         type='email'
-                        id='email'
-                        ref={emailRef}
                         placeholder='your.name@example.com'
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -158,7 +58,6 @@ const Login = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                         type='password'
-                        id='password'
                         placeholder='********'
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
@@ -166,14 +65,20 @@ const Login = () => {
                     />
                 </Form.Group>
 
-                <Button type='submit' className='mt-2 w-full bg-stone-800 text-stone-100 font-semibold rounded-md'>
+                <Button
+                    type='submit'
+                    className='mt-2 w-full bg-stone-800 text-stone-100 font-semibold rounded-md'
+                    disabled={isLoading}
+                >
                     Log In
                 </Button>
+
+                { isLoading && <Loader /> }
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                    New customer? <Link to='/signup'>Sign Up</Link>
+                    New customer? <Link to={ redirect ? `/signup?redirect=${redirect}` : '/signup' }>Sign Up</Link>
                 </Col>
             </Row>
         </FormContainer>
