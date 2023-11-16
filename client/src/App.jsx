@@ -6,7 +6,7 @@ import EditBook from './pages/EditBook'
 import ShowBook from './pages/ShowBook'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Register from './pages/Register'
 import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
 import AccountRecovery from './pages/AccountRecovery'
@@ -30,7 +30,7 @@ function App() {
           {/* public routes */}
           <Route path='/unauthorized' element={<Unauthorized />} />
           <Route path='/' element={<Home />} />
-          <Route path='/signup' element={<Signup />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/users/account-recovery' element={<AccountRecovery />} />
