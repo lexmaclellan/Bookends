@@ -1,43 +1,13 @@
 const { User } = require('../models')
 const asyncHandler = require('../middleware/asyncHandler')
 const jwt = require('jsonwebtoken')
+const { generateAccessToken, generateRefreshToken } = require('../utils/generateToken')
 
 const cookieOptions = {
     httpOnly: true,
     sameSite: 'strict',
     secure: process.env.NODE_ENV !== 'development',
     maxAge: 24 * 60 * 60 * 1000 * 3
-}
-
-function createAccessToken(_id, roles) {
-    const token = jwt.sign(
-        {
-            'UserInfo': {
-                '_id': _id,
-                'roles': roles
-            }
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30s' }
-    )
-
-    if(!token) {
-        throw new Error('Failed to create jsonwebtoken.')
-    }
-    return token
-}
-
-function createRefreshToken(_id) {
-    const token = jwt.sign(
-        {_id},
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '3d' }
-    )
-
-    if(!token) {
-        throw new Error('Failed to create jsonwebtoken.')
-    }
-    return token
 }
 
 // @desc    Auth user/set & get token
@@ -48,9 +18,9 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.login(email, password)
 
     if (user) {
-        const accessToken = createAccessToken(user._id, user.roles)
-        const refreshToken = createRefreshToken(user._id)
-
+        const accessToken = generateAccessToken(res, user._id, user.roles)
+        const refreshToken = generateRefreshToken(res, user._id)
+        console.log(refreshToken)
         user.refreshToken = refreshToken
         await user.save()
 
