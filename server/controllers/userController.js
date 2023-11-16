@@ -192,7 +192,7 @@ const getOneUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             roles: user.roles,
-            refreshToken: users[i].refreshToken,
+            refreshToken: user.refreshToken,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         })
