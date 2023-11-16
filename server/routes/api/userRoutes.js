@@ -1,7 +1,5 @@
 const router = require('express').Router()
-const ROLES = require('../../config/roles')
-const verifyRoles = require('../../middleware/verifyRoles')
-const verifyJWT = require('../../middleware/verifyJWT')
+const { protect, admin } = require('../../middleware/authMiddleware')
 
 const {
     authUser,
@@ -18,12 +16,12 @@ const {
     removeRole
 } = require ('../../controllers/userController')
 
-router.route('/').get(getUsers).post(registerUser)
+router.route('/').get(protect, admin, getUsers).post(registerUser)
 router.route('/auth').post(authUser)
-router.route('/profile').get(getUserProfile).put(updateUserProfile)
-router.route('/refresh').get(handleRefreshToken)
-router.route('/logout').post(logoutUser)
-router.route('/:userID').get(getOneUser).put(updateUser).delete(deleteUser)
-router.route('/:userID/roles').put(addRole).delete(removeRole)
+router.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile)
+router.route('/refresh').get(protect, handleRefreshToken)
+router.route('/logout').post(protect, logoutUser)
+router.route('/:userID').get(protect, admin, getOneUser).put(protect, admin, updateUser).delete(protect, admin, deleteUser)
+router.route('/:userID/roles').put(protect, admin, addRole).delete(protect, admin, removeRole)
 
 module.exports = router
