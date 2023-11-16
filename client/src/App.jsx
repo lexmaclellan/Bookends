@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import Unauthorized from './pages/Unauthorized'
 import AccountRecovery from './pages/AccountRecovery'
 import Shipping from './pages/Shipping'
+import Payment from './pages/Payment'
 import Layout from './components/Layout'
 import PrivateRoute from './components/PrivateRoute'
 import Missing from './components/Missing'
@@ -40,9 +41,11 @@ function App() {
           {/* protected routes */}
           <Route path='' element={<PrivateRoute />}>
             <Route path='/shipping' element={<Shipping />} />
+            <Route path='/payment' element={<Payment />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          {/* admin routes */}
+          <Route path='' element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route path='/admin' element={<Admin />} />
             <Route path='/books/create' element={<CreateBook />} />
             <Route path='/books/edit/:bookID' element={<EditBook />} />
