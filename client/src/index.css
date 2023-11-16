@@ -31,3 +31,11 @@ a:hover {
 .auth-submit:disabled {
     background-color: #a1a1aa;
 }
+
+.profile a {
+    color: #e7e5e4;
+}
+
+.dropdown-menu a {
+    color: #1c1917;
+}
