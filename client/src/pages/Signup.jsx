@@ -95,11 +95,11 @@ function Signup() {
                 <article className='p-4'>
                     <h3 className='text-2xl block font-semibold mb-2'>Welcome</h3>
                     <p>You are logged in.</p>
-                    <Link to='/' className='text-gray-50 font-semibold hover:underline hover:text-sky-200'>Back to Home</Link>
+                    <Link to='/'>Back to Home</Link>
                 </article>
             ) : (
-                <article className='p-4 flex justify-center items-center h-screen'>
-                    <section className='w-96 shadow-lg p-7 bg-slate-700 rounded-md'>
+                <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
+                    <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
                         <h3 className='text-2xl block text-center font-semibold'>Sign Up</h3>
                         <form onSubmit={handleSubmit}>
                             <hr className='mt-6' />
@@ -128,7 +128,7 @@ function Signup() {
                                     value={email}
                                     required
                                 />
-                                <p id='emailnote' className={emailFocus && email && !validEmail ? 'instructions flex' : 'offscreen'}>
+                                <p id='emailnote' className={emailFocus && email && !validEmail ? 'instructions flex mt-2' : 'offscreen'}>
                                     <span><BsInfoCircle className='text-2xl text-teal-200 hover:text-green-100 mr-2' /></span>
                                     <span>Must be a valid email address.</span>
                                 </p>
@@ -154,7 +154,7 @@ function Signup() {
                                     value={pwd}
                                     required
                                 />
-                                <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions flex' : 'offscreen'}>
+                                <p id='pwdnote' className={pwdFocus && !validPwd ? 'instructions flex mt-2' : 'offscreen'}>
                                     <span><BsInfoCircle className='text-2xl text-teal-200 hover:text-green-100 mr-2' /></span>
                                     <span>
                                         8 to 100 characters.<br />
@@ -192,14 +192,14 @@ function Signup() {
                                     value={matchPwd}
                                     required
                                 />
-                                <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions flex' : 'offscreen'}>
+                                <p id='confirmnote' className={matchFocus && !validMatch ? 'instructions flex mt-2' : 'offscreen'}>
                                     <span><BsInfoCircle className='text-2xl text-teal-200 hover:text-green-100 mr-2' /></span>
                                     <span>Must match the first password field.</span>
                                 </p>
                             </section>
                             
                             <button
-                                className='mt-6 py-1 w-full bg-gray-800 text-slate-300 border-2 border-slate-500 font-semibold rounded-md auth-submit'
+                                className='mt-6 py-1 w-full bg-gray-800 text-stone-300 border-2 border-slate-500 font-semibold rounded-md auth-submit'
                                 disabled={!validEmail || !validPwd || !validMatch ? true : false}
                             >
                                 Register
@@ -213,7 +213,7 @@ function Signup() {
                             </span>
                             <span>
                                 <p className='mt-2 text-base'>
-                                    <Link to='/login' className='text-sm text- font-semibold underline hover:no-underline'>
+                                    <Link to='/login' className='text-sm'>
                                         Log In
                                     </Link>
                                 </p>

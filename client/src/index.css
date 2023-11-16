@@ -3,8 +3,16 @@
 @tailwind utilities;
 
 body {
-    background-color: rgb(30 41 59);
-    color: white;
+    background-color: #d6d3d1;
+    color: #44403c;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 .hide {

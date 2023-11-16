@@ -1,12 +1,15 @@
+import { Row, Col } from 'react-bootstrap'
 import BookCardSingle from './BookCardSingle'
 
 function BookCard({ books }) {
   return (
-    <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {books.map((book) => (
-            <BookCardSingle key={book._id} book={book} />
-        ))}
-    </div>
+    <Row>
+      {books.map((book) => (
+        <Col key={book._id} sm={12} md={6} lg={4} xl={3}>
+          <BookCardSingle key={book._id} book={book} />
+        </Col>
+      ))}
+    </Row>
   )
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { MdOutlineAddBox } from 'react-icons/md'
 import axios from '../../api/axios'
-import Spinner from '../Spinner'
+import Loader from '../Loader'
 import UserCardGrid from './UserCardGrid'
 const USERS_URL = '/api/users'
 
@@ -34,9 +34,10 @@ function Users() {
 
         getUsers()
 
-        return () =>
-        isMounted = false
-        controller.abort()
+        return () => {
+            isMounted = false
+            controller.abort()
+        }
     }, [])
     return (
         <>
@@ -47,7 +48,7 @@ function Users() {
                 </Link>
             </div>
             {loading ? (
-                <Spinner />
+                <Loader />
             ) : (
                 <>
                     {users?.length

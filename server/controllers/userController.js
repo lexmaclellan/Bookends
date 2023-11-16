@@ -1,46 +1,16 @@
 const { User } = require('../models')
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('../middleware/asyncHandler')
 const jwt = require('jsonwebtoken')
+const { generateAccessToken, generateRefreshToken } = require('../utils/generateToken')
 
 const cookieOptions = {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV !== 'development',
     maxAge: 24 * 60 * 60 * 1000 * 3
 }
 
-function createAccessToken(_id, roles) {
-    const token = jwt.sign(
-        {
-            'UserInfo': {
-                '_id': _id,
-                'roles': roles
-            }
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30s' }
-    )
-
-    if(!token) {
-        throw new Error('Failed to create jsonwebtoken.')
-    }
-    return token
-}
-
-function createRefreshToken(_id) {
-    const token = jwt.sign(
-        {_id},
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '3d' }
-    )
-
-    if(!token) {
-        throw new Error('Failed to create jsonwebtoken.')
-    }
-    return token
-}
-
-// @desc    Auth user/set token
+// @desc    Auth user/set & get token
 // route    POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
@@ -48,9 +18,9 @@ const authUser = asyncHandler(async (req, res) => {
     const user = await User.login(email, password)
 
     if (user) {
-        const accessToken = createAccessToken(user._id, user.roles)
-        const refreshToken = createRefreshToken(user._id)
-
+        const accessToken = generateAccessToken(res, user._id, user.roles)
+        const refreshToken = generateRefreshToken(res, user._id)
+        console.log(refreshToken)
         user.refreshToken = refreshToken
         await user.save()
 
@@ -118,9 +88,9 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
     )
 })
 
-// @desc    Logout user
-// route    GET /api/users/logout
-// @access  Public
+// @desc    Logout user / clear cookie
+// route    POST /api/users/logout
+// @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
     const cookies = req.cookies
     if (!cookies?.jwt) return res.sendStatus(204)
@@ -140,9 +110,62 @@ const logoutUser = asyncHandler(async (req, res) => {
     res.status(204).json({ message: 'User logged out' })
 })
 
+// @desc    Get user profile
+// route    GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.roles,
+            refreshToken: user.refreshToken,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
+})
+
+// @desc    Update user profile
+// route    PUT /api/users/profile
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id)
+
+    if (user) {
+        user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+
+        if (req.body.password) {
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save()
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.roles,
+            refreshToken: user.refreshToken,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
+})
+
 // @desc    Get all users
 // route    GET /api/users
-// @access  Private
+// @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
     const users = await User.find()
     const usersList = []
@@ -167,45 +190,74 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // @desc    Get one user
 // route    GET /api/users/:userID
-// @access  Private
+// @access  Private/Admin
 const getOneUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userID)
 
     if (user) {
-        const userList = []
-        userList.push({
+        res.status(200).json({
             _id: user._id,
             name: user.name,
             email: user.email,
             roles: user.roles,
-            refreshToken: users[i].refreshToken,
+            refreshToken: user.refreshToken,
             createdAt: user.createdAt,
             updatedAt: user.updatedAt
         })
-        res.status(200).json(userList)
     } else {
         res.status(404)
         throw new Error('No user found with that ID.')
     }
 })
 
-// @desc    Update user
-// route    PUT /api/users/:userID
-// @access  Private
+// @desc    Update user profile
+// route    PUT /api/users/profile
+// @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Update User' })
+    const user = await User.findById(req.params.userID)
+
+    if (user) {
+        user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+
+        if (req.body.password) {
+            user.password = req.body.password
+        }
+
+        const updatedUser = await user.save()
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.roles,
+            refreshToken: user.refreshToken,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
 })
 
 // @desc    Delete user
 // route    DELETE /api/users/:userID
-// @access  Private
+// @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
-    res.status(200).json({ message: 'Delete User' })
+    const user = await User.findByIdAndDelete(req.params.userID)
+
+    if (user) {
+        res.status(200).json({ message: 'User deleted.' })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
 })
 
 // @desc    Add role to user
 // route    PUT /api/users/:userID/roles
-// @access  Private
+// @access  Private/Admin
 const addRole = asyncHandler(async (req, res) => {
     const user = await User.findByIdAndUpdate(
         req.params.userID,
@@ -223,9 +275,20 @@ const addRole = asyncHandler(async (req, res) => {
 
 // @desc    Remove role from user
 // route    PUT /api/users/:userID/roles
-// @access  Private
+// @access  Private/Admin
 const removeRole = asyncHandler(async (req, res) => {
+    const user = await User.findByIdAndUpdate(
+        req.params.userID,
+        { $pull: { roles: req.body } },
+        { new: true }
+    )
 
+    if (user) {
+        res.status(200).json({ message: 'Role removed successfully.' })
+    } else {
+        res.status(404)
+        throw new Error('No user found with that ID.')
+    }
 })
 
 module.exports = {
@@ -233,6 +296,8 @@ module.exports = {
     registerUser,
     handleRefreshToken,
     logoutUser,
+    getUserProfile,
+    updateUserProfile,
     getUsers,
     getOneUser,
     updateUser,

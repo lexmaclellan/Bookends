@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useSnackbar } from 'notistack'
 import { useAuth } from '../hooks/useAuth'
 import axios from '../api/axios'
 const LOGIN_URL = '/api/users/auth'
@@ -38,9 +37,7 @@ function Login() {
                     //withCredentials: true
                 }
             )
-            console.log(JSON.stringify(res?.data))
-
-            const accessToken = res?.data?.token
+            const accessToken = res?.data?.accessToken
             const roles = res?.data?.roles
 
             setAuth({ email, password, roles, accessToken })
@@ -65,8 +62,8 @@ function Login() {
 
     return (
         <>
-            <article className='p-4 flex justify-center items-center h-screen'>
-                <section className='w-96 shadow-lg p-7 bg-slate-700 rounded-md'>
+            <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
+                <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
                     <h3 className='text-2xl block text-center font-semibold'>Login</h3>
                     <form onSubmit={handleSubmit}>
                         <hr className='mt-6' />
@@ -112,7 +109,7 @@ function Login() {
                             </span>
                         </section>
 
-                        <button className='mt-6 py-1 w-full bg-gray-800 text-slate-300 border-2 border-slate-500 font-semibold rounded-md'>
+                        <button className='mt-6 py-1 w-full bg-stone-800 text-stone-300 border-2 border-stone-500 font-semibold rounded-md'>
                             Log In
                         </button>
                     </form>
@@ -120,7 +117,7 @@ function Login() {
                         <span></span>
                         <span>
                             <p className='mt-2 text-base'>
-                                <Link to='/signup' className='text-sm text- font-semibold underline hover:no-underline'>
+                                <Link to='/signup' className='text-sm font-semibold'>
                                     Sign Up
                                 </Link>
                             </p>
