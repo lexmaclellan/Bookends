@@ -42,12 +42,12 @@ const authUser = asyncHandler(async (req, res) => {
 // route    POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { email, password, roles } = req.body
-    const user = await User.register(email, password, roles)
+    const { name, email, password, roles } = req.body
+    const user = await User.register(name, email, password, roles)
 
     if (user) {
-        const accessToken = createAccessToken(user._id, user.roles)
-        const refreshToken = createRefreshToken(user._id)
+        const accessToken = generateAccessToken(res, user._id, user.roles)
+        const refreshToken = generateRefreshToken(res, user._id)
 
         user.refreshToken = refreshToken
         await user.save()
