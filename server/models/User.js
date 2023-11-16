@@ -37,9 +37,9 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.statics.register = async function(email, password) {
-    if (!email || !password) {
-        throw new Error('Send all required fields: email, password')
+userSchema.statics.register = async function(name, email, password) {
+    if (!name || !email || !password) {
+        throw new Error('Send all required fields: name, email, password')
     }
 
     if (!validator.isEmail(email)) {
@@ -53,12 +53,8 @@ userSchema.statics.register = async function(email, password) {
     if (exists) {
         throw new Error('A user with that email address is already registered.')
     }
-
-    // const salt = await bcrypt.genSalt(10)
-    // const hash = await bcrypt.hash(password, salt)
-
-    // const newUser = { email, password: hash }
-    const newUser = { email, password }
+    
+    const newUser = { name, email, password }
     const user = await this.create(newUser)
     
     return user
