@@ -47,3 +47,7 @@ a:hover {
 .dropdown-menu a {
     color: #1c1917;
 }
+
+.orderItemsImg {
+    max-height: 100px;
+}
