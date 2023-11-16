@@ -31,7 +31,7 @@ const Login = () => {
         e.preventDefault()
         try {
             const res = await login({ email, password }).unwrap()
-            dispatch(setCredentials({...res}))
+            dispatch(setCredentials({ ...res }))
             navigate(redirect)
         } catch (err) {
             toast.error(err?.data?.message || err.error)
@@ -73,12 +73,12 @@ const Login = () => {
                     Log In
                 </Button>
 
-                { isLoading && <Loader /> }
+                {isLoading && <Loader />}
             </Form>
 
             <Row className='py-3'>
                 <Col>
-                    New customer? <Link to={ redirect ? `/signup?redirect=${redirect}` : '/signup' }>Sign Up</Link>
+                    New customer? <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>Sign Up</Link>
                 </Col>
             </Row>
         </FormContainer>
