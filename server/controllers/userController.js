@@ -1,7 +1,7 @@
-const { User } = require('../models')
 const asyncHandler = require('../middleware/asyncHandler')
-const jwt = require('jsonwebtoken')
+const { User } = require('../models')
 const { generateAccessToken, generateRefreshToken } = require('../utils/generateToken')
+const jwt = require('jsonwebtoken')
 
 const cookieOptions = {
     httpOnly: true,
