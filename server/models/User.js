@@ -54,10 +54,11 @@ userSchema.statics.register = async function(email, password) {
         throw new Error('A user with that email address is already registered.')
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
+    // const salt = await bcrypt.genSalt(10)
+    // const hash = await bcrypt.hash(password, salt)
 
-    const newUser = { email, password: hash }
+    // const newUser = { email, password: hash }
+    const newUser = { email, password }
     const user = await this.create(newUser)
     
     return user
@@ -86,6 +87,15 @@ userSchema.statics.login = async function(email, password) {
 
     return user
 }
+
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        next()
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+})
 
 const User = model('User', userSchema)
 
