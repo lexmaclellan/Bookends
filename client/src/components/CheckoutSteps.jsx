@@ -1,6 +1,6 @@
 import { Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { BsArrowRight } from 'react-icons/bs'
+import { HiArrowLongRight } from 'react-icons/hi2'
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
     return (
@@ -16,7 +16,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             </Nav.Item>
 
             <Nav.Item className='mt-2'>
-                <BsArrowRight />
+                <HiArrowLongRight />
             </Nav.Item>
 
             <Nav.Item>
@@ -30,7 +30,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             </Nav.Item>
             
             <Nav.Item className='mt-2'>
-                <BsArrowRight />
+                <HiArrowLongRight />
             </Nav.Item>
 
             <Nav.Item>
@@ -44,7 +44,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             </Nav.Item>
             
             <Nav.Item className='mt-2'>
-                <BsArrowRight />
+                <HiArrowLongRight />
             </Nav.Item>
 
             <Nav.Item>
