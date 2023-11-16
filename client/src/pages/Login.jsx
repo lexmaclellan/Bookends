@@ -1,10 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useAuth } from '../hooks/useAuth'
 import axios from '../api/axios'
+import FormContainer from '../components/FormContainer'
 const LOGIN_URL = '/api/users/auth'
 
-function Login() {
+const Login = () => {
     const { setAuth } = useAuth()
 
     const navigate = useNavigate()
@@ -60,72 +62,121 @@ function Login() {
         }
     }
 
-    return (
-        <>
-            <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
-                <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
-                    <h3 className='text-2xl block text-center font-semibold'>Login</h3>
-                    <form onSubmit={handleSubmit}>
-                        <hr className='mt-6' />
-                        <section className='mt-2 font-semibold'>
-                            <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
-                                {errMsg}
-                            </p>
-                        </section>
-                        <section className='mt-3'>
-                            <label htmlFor='email' className='block text-base mb-1'>Email Address:</label>
-                            <input
-                                type='email'
-                                id='email'
-                                ref={emailRef}
-                                className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
-                                placeholder='your.name@example.com'
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                                required
-                            />
-                        </section>
+    const oldCode = () => {
+        return (
+            <>
+                <article className='p-4 flex justify-center items-center h-screen text-stone-100'>
+                    <section className='w-96 shadow-lg p-7 bg-stone-600 rounded-md'>
+                        <h3 className='text-2xl block text-center font-semibold'>Login</h3>
+                        <form onSubmit={handleSubmit}>
+                            <hr className='mt-6' />
+                            <section className='mt-2 font-semibold'>
+                                <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
+                                    {errMsg}
+                                </p>
+                            </section>
+                            <section className='mt-3'>
+                                <label htmlFor='email' className='block text-base mb-1'>Email Address:</label>
+                                <input
+                                    type='email'
+                                    id='email'
+                                    ref={emailRef}
+                                    className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
+                                    placeholder='your.name@example.com'
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    required
+                                />
+                            </section>
 
-                        <section className='mt-3'>
-                            <label htmlFor='password' className='block text-base mb-1'>Password:</label>
-                            <input
-                                type='password'
-                                id='password'
-                                className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
-                                placeholder='********'
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                                required
-                            />
-                        </section>
+                            <section className='mt-3'>
+                                <label htmlFor='password' className='block text-base mb-1'>Password:</label>
+                                <input
+                                    type='password'
+                                    id='password'
+                                    className='border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-950 rounded-md'
+                                    placeholder='********'
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                    required
+                                />
+                            </section>
 
+                            <section className='mt-1 flex justify-between items-center'>
+                                <span>
+                                    <input type='checkbox' id='checkbox' className='mr-1' />
+                                    <label htmlFor='checkbox' className='text-sm'>Remember Me</label>
+                                </span>
+                                <span>
+                                    <Link to='/users/account-recovery' className='text-sm'>Forgot Password?</Link>
+                                </span>
+                            </section>
+
+                            <button className='mt-6 py-1 w-full bg-stone-800 text-stone-300 border-2 border-stone-500 font-semibold rounded-md'>
+                                Log In
+                            </button>
+                        </form>
                         <section className='mt-1 flex justify-between items-center'>
+                            <span></span>
                             <span>
-                                <input type='checkbox' id='checkbox' className='mr-1' />
-                                <label htmlFor='checkbox' className='text-sm'>Remember Me</label>
-                            </span>
-                            <span>
-                                <Link to='/users/account-recovery' className='text-sm'>Forgot Password?</Link>
+                                <p className='mt-2 text-base'>
+                                    <Link to='/signup' className='text-sm font-semibold'>
+                                        Sign Up
+                                    </Link>
+                                </p>
                             </span>
                         </section>
-
-                        <button className='mt-6 py-1 w-full bg-stone-800 text-stone-300 border-2 border-stone-500 font-semibold rounded-md'>
-                            Log In
-                        </button>
-                    </form>
-                    <section className='mt-1 flex justify-between items-center'>
-                        <span></span>
-                        <span>
-                            <p className='mt-2 text-base'>
-                                <Link to='/signup' className='text-sm font-semibold'>
-                                    Sign Up
-                                </Link>
-                            </p>
-                        </span>
                     </section>
-                </section>
-            </article>
-        </>
+                </article>
+            </>
+        )
+    }
+    return (
+        <FormContainer>
+            <h3 className='text-2xl block text-center font-semibold'>Login</h3>
+
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId='err'>
+                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>
+                        {errMsg}
+                    </p>
+                </Form.Group>
+                <Form.Group controlId='email' className='my-3'>
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                        type='email'
+                        id='email'
+                        ref={emailRef}
+                        placeholder='your.name@example.com'
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                        required
+                    />
+                </Form.Group>
+
+                <Form.Group controlId='password' className='my-3'>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type='password'
+                        id='password'
+                        placeholder='********'
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        required
+                    />
+                </Form.Group>
+
+                <Button type='submit' className='mt-2 w-full bg-stone-800 text-stone-100 font-semibold rounded-md'>
+                    Log In
+                </Button>
+            </Form>
+
+            <Row className='py-3'>
+                <Col>
+                    New customer? <Link to='/signup'>Sign Up</Link>
+                </Col>
+            </Row>
+        </FormContainer>
     )
 }
 
