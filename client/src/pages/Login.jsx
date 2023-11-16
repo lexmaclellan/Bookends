@@ -18,14 +18,15 @@ const Login = () => {
     const [login, { isLoading }] = useLoginMutation()
     const { userInfo } = useSelector((state) => state.auth)
 
-    const { search } = useLocation
+    const { search } = useLocation()
     const sp = new URLSearchParams(search)
     const redirect = sp.get('redirect') || '/'
-
+    
     useEffect(() => {
-        if (userInfo)
+        if (userInfo) {
             navigate(redirect)
-    }, [userInfo, redirect, navigate])
+        }
+    }, [navigate, redirect, userInfo])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
