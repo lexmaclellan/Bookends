@@ -5,7 +5,6 @@ const ROLES = require('../config/roles')
 
 const protect = asyncHandler(async (req, res, next) => {
     let token = req.cookies.jwt
-    console.log(token)
 
     if (token) {
         try {

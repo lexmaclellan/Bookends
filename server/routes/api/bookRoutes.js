@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { protect, admin } = require('../../middleware/authMiddleware')
 
 const {
     getAllBooks,
