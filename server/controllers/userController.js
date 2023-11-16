@@ -1,5 +1,5 @@
 const { User } = require('../models')
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('../middleware/asyncHandler')
 const jwt = require('jsonwebtoken')
 
 const cookieOptions = {
