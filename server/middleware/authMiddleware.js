@@ -10,7 +10,6 @@ const protect = asyncHandler(async (req, res, next) => {
     if (token) {
         try {
             const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
-            console.log(decoded)
             req.user = await User.findById(decoded._id).select('-password')
             next()
         } catch (err) {
@@ -25,7 +24,6 @@ const protect = asyncHandler(async (req, res, next) => {
 })
 
 const admin = (req, res, next) => {
-    console.log(req.user.roles)
     if (req.user && req.user.roles.Admin === ROLES.Admin) {
         next()
     } else {
