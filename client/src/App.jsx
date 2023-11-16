@@ -12,6 +12,7 @@ import Unauthorized from './pages/Unauthorized'
 import AccountRecovery from './pages/AccountRecovery'
 import Shipping from './pages/Shipping'
 import Payment from './pages/Payment'
+import PlaceOrder from './pages/PlaceOrder'
 import Layout from './components/Layout'
 import PrivateRoute from './components/PrivateRoute'
 import Missing from './components/Missing'
@@ -42,6 +43,7 @@ function App() {
           <Route path='' element={<PrivateRoute />}>
             <Route path='/shipping' element={<Shipping />} />
             <Route path='/payment' element={<Payment />} />
+            <Route path='/place-order' element={<PlaceOrder />} />
           </Route>
 
           {/* admin routes */}
