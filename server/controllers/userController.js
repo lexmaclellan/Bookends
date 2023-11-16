@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const cookieOptions = {
     httpOnly: true,
-    sameSite: 'None',
-    secure: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV !== 'development',
     maxAge: 24 * 60 * 60 * 1000 * 3
 }
 
@@ -40,7 +40,7 @@ function createRefreshToken(_id) {
     return token
 }
 
-// @desc    Auth user/set token
+// @desc    Auth user/set & get token
 // route    POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
@@ -118,9 +118,9 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
     )
 })
 
-// @desc    Logout user
-// route    GET /api/users/logout
-// @access  Public
+// @desc    Logout user / clear cookie
+// route    POST /api/users/logout
+// @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
     const cookies = req.cookies
     if (!cookies?.jwt) return res.sendStatus(204)
@@ -140,9 +140,23 @@ const logoutUser = asyncHandler(async (req, res) => {
     res.status(204).json({ message: 'User logged out' })
 })
 
+// @desc    Get user profile
+// route    GET /api/users/profile
+// @access  Private
+const getUserProfile = asyncHandler(async (req, res) => {
+    res.send('get user profile')
+})
+
+// @desc    Update user profile
+// route    PUT /api/users/profile
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+    res.send('update user profile')
+})
+
 // @desc    Get all users
 // route    GET /api/users
-// @access  Private
+// @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
     const users = await User.find()
     const usersList = []
@@ -167,7 +181,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
 // @desc    Get one user
 // route    GET /api/users/:userID
-// @access  Private
+// @access  Private/Admin
 const getOneUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userID)
 
@@ -189,23 +203,23 @@ const getOneUser = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc    Update user
-// route    PUT /api/users/:userID
-// @access  Private
+// @desc    Update user profile
+// route    PUT /api/users/profile
+// @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Update User' })
 })
 
 // @desc    Delete user
 // route    DELETE /api/users/:userID
-// @access  Private
+// @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Delete User' })
 })
 
 // @desc    Add role to user
 // route    PUT /api/users/:userID/roles
-// @access  Private
+// @access  Private/Admin
 const addRole = asyncHandler(async (req, res) => {
     const user = await User.findByIdAndUpdate(
         req.params.userID,
@@ -223,7 +237,7 @@ const addRole = asyncHandler(async (req, res) => {
 
 // @desc    Remove role from user
 // route    PUT /api/users/:userID/roles
-// @access  Private
+// @access  Private/Admin
 const removeRole = asyncHandler(async (req, res) => {
 
 })
@@ -233,6 +247,8 @@ module.exports = {
     registerUser,
     handleRefreshToken,
     logoutUser,
+    getUserProfile,
+    updateUserProfile,
     getUsers,
     getOneUser,
     updateUser,
