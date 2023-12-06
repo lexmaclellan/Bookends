@@ -2,10 +2,11 @@
 
 ## Description
 
-Bookends is an e-commerce app built using the MERN stack with Stripe integration. It is made for a small bookstore business, allowing users to shop online and allowing the business to keep track of their stock of products.
+Bookends is a WIP e-commerce app built using the MERN stack with Stripe integration. It is made for a small bookstore business, allowing users to shop online and allowing the business to keep track of their stock of products.
 
 ## Table of Contents
 - [Installation](#installation)
+- [Development](#Development)
 - [Usage](#usage)
 - [Technologies](#technologies)
 - [License](#license)
@@ -14,6 +15,10 @@ Bookends is an e-commerce app built using the MERN stack with Stripe integration
 
 1. Clone this repository.
 2. In the terminal, navigate to the Bookends directory, then enter `npm install`.
+
+## Development
+
+Development of Bookends is currently paused while I focus on other projects and job searching.
 
 ## Usage
 
