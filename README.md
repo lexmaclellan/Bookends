@@ -34,7 +34,7 @@ Made using MongoDB Atlas, Mongoose, Node.js, Express.js, React, Redux, Bootstrap
 
 [ANTI-CAPITALIST SOFTWARE LICENSE (v 1.4)](https://anticapitalist.software/)
 
-Copyright © 2023 lexrayne
+Copyright © 2023 Lex MacLellan
 
 This is anti-capitalist software, released for free use by individuals and organizations that do not operate by capitalist principles.
 
